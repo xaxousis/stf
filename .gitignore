@@ -1,0 +1,59 @@
+# Solution files
+*.sublime-workspace
+*~
+*.mk
+*.session
+*.sample
+*.unit
+*.bench
+*.user
+*.vcproj
+*.ncb
+*.sln
+*.suo
+*.exe
+*.desktop
+*.orig
+*_
+*.manifest
+*.res
+*.ilk
+*.pdb
+*.resource.txt
+*.bak
+*.swp
+.DS_Store
+.project
+.cproject
+*.sublime-workspace
+*.instrumented.obj
+
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
