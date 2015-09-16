@@ -57,8 +57,8 @@ after_build:
 
 build_script:
  - cd c:\sources\stf\build
- - msbuild /target:unit /p:Configuration=Release;Platform="x64" stf.sln
- - msbuild /target:unit /p:Configuration=Debug;Platform="x64" stf.sln
+ - cmake --build . --config Release --target unit
+ - cmake --build . --config Debug   --target unit
 
 # scripts to run before tests
 before_test:
