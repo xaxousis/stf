@@ -80,6 +80,12 @@ namespace stf { namespace detail
   template <typename T, typename R>
   using if_container = typename std::enable_if<is_container<T>::type::value,R>::type;
 
+  template<typename T, typename U, typename R>
+  using are_not_containers = typename std::enable_if<   !detail::is_container<T>::type::value
+                                                    &&  !detail::is_container<U>::type::value
+                                                    ,   R
+                                                  >::type;
+
 
   /*!
     @brief SFINAE trigger for non-container types

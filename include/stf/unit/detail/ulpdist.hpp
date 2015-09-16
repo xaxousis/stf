@@ -152,14 +152,8 @@ namespace stf
     return ulps;
   }
 
-  template<typename T, typename U, typename R>
-  using are_not_containers = typename std::enable_if<   !detail::is_container<T>::type::value
-                                                    &&  !detail::is_container<U>::type::value
-                                                    ,   R
-                                                  >::type;
-
   template<typename T, typename U>
-  inline are_not_containers<T,U,double> ulpdist(T const& a0, U const& a1)
+  inline detail::are_not_containers<T,U,double> ulpdist(T const& a0, U const& a1)
   {
     return ulpdist(static_cast<detail::common_t<T,U>>(a0), static_cast<detail::common_t<T,U>>(a1));
   }

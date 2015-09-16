@@ -135,11 +135,7 @@ namespace stf
   }
 
   template<typename T, typename U>
-  inline auto reldist(T const& a0, U const& a1)
-              -> decltype ( reldist ( static_cast<detail::common_t<T,U>>(a0)
-                                    , static_cast<detail::common_t<T,U>>(a1)
-                                    )
-                          )
+  inline detail::are_not_containers<T,U,double> reldist(T const& a0, U const& a1)
   {
     return reldist(static_cast<detail::common_t<T,U>>(a0), static_cast<detail::common_t<T,U>>(a1));
   }
