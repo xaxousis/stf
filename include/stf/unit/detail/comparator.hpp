@@ -19,13 +19,20 @@
 namespace stf { namespace detail
 {
   template<typename LHS, typename RHS>
-  inline bool compare_equal(LHS const& l, RHS const& r)         { return l == r; }
+  inline bool isequaln(LHS const& l, RHS const& r)
+  {
+    // equality or both are NaNs
+    return (l == r) || ((l!=l) && (r!=r));
+  }
+
+  template<typename LHS, typename RHS>
+  inline bool compare_not_equal(LHS const& l, RHS const& r)
+  {
+    return !isequaln(l,r);
+  }
 
   template<typename LHS, typename RHS>
   inline bool compare_less(LHS const& l, RHS const& r)          { return l < r; }
-
-  template<typename LHS, typename RHS>
-  inline bool compare_not_equal(LHS const& l, RHS const& r)     { return l != r; }
 
   template<typename LHS, typename RHS>
   inline bool compare_less_equal(LHS const& l, RHS const& r)    { return l <= r; }

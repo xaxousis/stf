@@ -23,7 +23,7 @@
   Test for value equality.
 
   This macro performs an equality test between its arguments using either the natural @c == operator
-  or an ADL-accessible function named @c compare_equal , whichever occurs first.
+  or an ADL-accessible function named @c isequaln , whichever occurs first.
 
   @par Usage:
 

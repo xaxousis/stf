@@ -17,8 +17,7 @@ namespace foo
 {
   struct bar { float v; };
 
-  bool compare_equal        (bar const& a, bar const& b)  { return a.v == b.v; }
-  bool compare_not_equal    (bar const& a, bar const& b)  { return a.v != b.v; }
+  bool isequaln             (bar const& a, bar const& b)  { return a.v == b.v; }
   bool compare_less         (bar const& a, bar const& b)  { return a.v <  b.v; }
   bool compare_less_equal   (bar const& a, bar const& b)  { return a.v <= b.v; }
   bool compare_greater      (bar const& a, bar const& b)  { return a.v >  b.v; }

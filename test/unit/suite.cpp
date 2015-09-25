@@ -23,7 +23,7 @@ namespace foo_
     return os << "foo(" << (void*)(&f) << ")";
   }
 
-  bool compare_equal(foo const&, foo const&)
+  bool isequaln(foo const&, foo const&)
   {
     return true;
   }

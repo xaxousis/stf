@@ -29,7 +29,7 @@ namespace stf
       template<typename T, typename U>
       auto operator()(T const& data, U const& ref) const -> decltype(reldist(data,ref))
       {
-        using stf::reldist;
+        using ::stf::reldist;
         return reldist(data,ref);
       }
 

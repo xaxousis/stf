@@ -41,17 +41,17 @@ namespace stf { namespace detail
                     };
     }
 
-    #define STF_BINARY_DECOMPOSE(OP,SB,FN)                                                       \
+    #define STF_BINARY_DECOMPOSE(OP,SB,FN)                                                          \
     template<typename R> result operator OP( R const & rhs )                                        \
     {                                                                                               \
-      using stf::detail::FN;                                                                     \
+      using stf::detail::FN;                                                                        \
       return  { FN(lhs, rhs)                                                                        \
-              , stf::to_string( lhs ), stf::split_line(lhs,rhs,SB), stf::to_string(rhs)    \
+              , stf::to_string( lhs ), stf::split_line(lhs,rhs,SB), stf::to_string(rhs)             \
               };                                                                                    \
     }                                                                                               \
     /**/
 
-    STF_BINARY_DECOMPOSE( ==,  "==", compare_equal         )
+    STF_BINARY_DECOMPOSE( ==,  "==", isequaln              )
     STF_BINARY_DECOMPOSE( !=,  "!=", compare_not_equal     )
     STF_BINARY_DECOMPOSE( < ,  "<" , compare_less          )
     STF_BINARY_DECOMPOSE( <=,  "<=", compare_less_equal    )
