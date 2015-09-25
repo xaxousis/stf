@@ -58,6 +58,17 @@ install ( DIRECTORY ${PROJECT_SOURCE_DIR}/include/stf
         )
 
 ##===================================================================================================
+## Standalone generator target
+##===================================================================================================
+add_custom_target(standalone
+    COMMAND ${CMAKE_COMMAND} -E remove ${PROJECT_SOURCE_DIR}/standalone/stf.hpp
+    COMMAND python ${PROJECT_SOURCE_DIR}/script/embed.py -I include/ --include-match=stf/* include/stf/stf.hpp -o standalone/stf.hpp
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+    COMMENT "Building standalone header file"
+    VERBATIM
+)
+
+##===================================================================================================
 ## Setup Testing
 ##===================================================================================================
 enable_testing()

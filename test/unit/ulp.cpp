@@ -99,4 +99,6 @@ STF_CASE("ULP distance of type with custom ulpdist")
 {
   STF_ULP_EQUAL(n1::my_real{1.f}, n1::my_real{8.f}, 0.125);
   STF_ULP_EQUAL(n1::my_real{8.f}, n1::my_real{1.f}, 8.);
+
+  STF_ULP_EQUAL(2.0, 3.0, 0.5);
 }

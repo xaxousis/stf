@@ -10,6 +10,7 @@
 //==================================================================================================
 #include <stf/unit/unit.hpp>
 #include <stf/unit/tests/relation.hpp>
+#include <limits>
 
 //! [bar]
 namespace foo
@@ -94,3 +95,13 @@ STF_CASE( "Check correctness of greater-or-equal-than tests" )
   STF_GREATER_EQUAL(y,y);
 }
 //! [greater_equal]
+
+STF_CASE( "Check correctness of tests for NaNs" )
+{
+  float x = std::numeric_limits<float>::quiet_NaN(),y{0.3f};
+  std::vector<float> a{x,x,x}, b{1,2,3};
+
+  // NaN == NaN is desirable behavior
+  STF_EQUAL(x,x);
+  STF_EQUAL(a,a);
+}
