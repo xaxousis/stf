@@ -663,13 +663,19 @@ $.stream()  << "failing because:\n"                                             
 namespace stf { namespace detail
 {
   template<typename LHS, typename RHS>
-  inline bool compare_equal(LHS const& l, RHS const& r)         { return l == r; }
+  inline bool isequaln(LHS const& l, RHS const& r)
+  {
+        return (l == r) || ((l!=l) && (r!=r));
+  }
+
+  template<typename LHS, typename RHS>
+  inline bool compare_not_equal(LHS const& l, RHS const& r)
+  {
+    return !isequaln(l,r);
+  }
 
   template<typename LHS, typename RHS>
   inline bool compare_less(LHS const& l, RHS const& r)          { return l < r; }
-
-  template<typename LHS, typename RHS>
-  inline bool compare_not_equal(LHS const& l, RHS const& r)     { return l != r; }
 
   template<typename LHS, typename RHS>
   inline bool compare_less_equal(LHS const& l, RHS const& r)    { return l <= r; }
@@ -702,16 +708,16 @@ namespace stf { namespace detail
                     };
     }
 
-    #define STF_BINARY_DECOMPOSE(OP,SB,FN)                                                       \
+    #define STF_BINARY_DECOMPOSE(OP,SB,FN)                                                          \
     template<typename R> result operator OP( R const & rhs )                                        \
     {                                                                                               \
-      using stf::detail::FN;                                                                     \
+      using stf::detail::FN;                                                                        \
       return  { FN(lhs, rhs)                                                                        \
-              , stf::to_string( lhs ), stf::split_line(lhs,rhs,SB), stf::to_string(rhs)    \
+              , stf::to_string( lhs ), stf::split_line(lhs,rhs,SB), stf::to_string(rhs)             \
               };                                                                                    \
     }                                                                                               \
     
-    STF_BINARY_DECOMPOSE( ==,  "==", compare_equal         )
+    STF_BINARY_DECOMPOSE( ==,  "==", isequaln              )
     STF_BINARY_DECOMPOSE( !=,  "!=", compare_not_equal     )
     STF_BINARY_DECOMPOSE( < ,  "<" , compare_less          )
     STF_BINARY_DECOMPOSE( <=,  "<=", compare_less_equal    )
@@ -1037,7 +1043,7 @@ namespace stf
   }
 
     template<typename Measure, typename Reference, typename U>
-  inline bool compare_equal(U const& l, approx_<Measure, Reference> const& r)
+  inline bool isequaln(U const& l, approx_<Measure, Reference> const& r)
   {
     return r.compare(l);
   }
@@ -1272,7 +1278,7 @@ namespace stf
       template<typename T, typename U>
       auto operator()(T const& data, U const& ref) const -> decltype(reldist(data,ref))
       {
-        using stf::reldist;
+        using ::stf::reldist;
         return reldist(data,ref);
       }
 
