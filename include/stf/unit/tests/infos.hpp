@@ -28,11 +28,11 @@
   @param COLOR   Color of the indicator
   @param MESSAGE Values to display
 **/
-#define STF_DISPLAY( INDICATOR, COLOR, MESSAGE )                                                 \
+#define STF_DISPLAY( INDICATOR, COLOR, MESSAGE )                                                    \
 do                                                                                                  \
 {                                                                                                   \
   if(!$.is_compact()) $.stream() << COLOR(INDICATOR) << MESSAGE << std::endl;                       \
-} while( ::stf::is_false() )                                                                     \
+} while( ::stf::is_false() )                                                                        \
 /**/
 
 /*!
@@ -83,19 +83,19 @@ do                                                                              
 
   @param MESSAGE Values to stream as additional informations
 **/
-#define STF_PASS( MESSAGE )                                                                      \
+#define STF_PASS( MESSAGE )                                                                         \
 do                                                                                                  \
 {                                                                                                   \
   $.as_success();                                                                                   \
   if(!$.is_compact())                                                                               \
   {                                                                                                 \
-    $.pass() << MESSAGE << " in: " << ::stf::at(__FILE__,__LINE__) << std::endl;                 \
+    $.pass() << MESSAGE << " in: " << ::stf::at(__FILE__,__LINE__) << std::endl;                    \
   }                                                                                                 \
   else                                                                                              \
   {                                                                                                 \
-    $.stream() << ::stf::green_("+");                                                            \
+    $.stream() << ::stf::green_("+");                                                               \
   }                                                                                                 \
-} while( ::stf::is_false() )                                                                     \
+} while( ::stf::is_false() )                                                                        \
 /**/
 
 /*!
@@ -110,19 +110,19 @@ do                                                                              
 
   @param MESSAGE Values to stream as additional informations
 **/
-#define STF_FAIL( MESSAGE )                                                                      \
+#define STF_FAIL( MESSAGE )                                                                         \
 do                                                                                                  \
 {                                                                                                   \
   $.as_failure();                                                                                   \
   if(!$.is_compact())                                                                               \
   {                                                                                                 \
-    $.fail() << MESSAGE << " in: " << ::stf::at(__FILE__,__LINE__) << std::endl;                 \
+    $.fail() << MESSAGE << " in: " << ::stf::at(__FILE__,__LINE__) << std::endl;                    \
   }                                                                                                 \
   else                                                                                              \
   {                                                                                                 \
-    $.stream() << ::stf::red_("-");                                                              \
+    $.stream() << ::stf::red_("-");                                                                 \
   }                                                                                                 \
-} while( ::stf::is_false() )                                                                     \
+} while( ::stf::is_false() )                                                                        \
 /**/
 
 #endif

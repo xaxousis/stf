@@ -38,20 +38,20 @@
   @param B Second expression to compare
   @param X ULP distance threshold
 **/
-#define STF_ULP_EQUAL(A,B,X)                                                                     \
+#define STF_ULP_EQUAL(A,B,X)                                                                        \
 do                                                                                                  \
 {                                                                                                   \
-  auto r = STF_DECOMPOSE((A) == ::stf::ulp(B,X));                                             \
-  if( r )                                                                                           \
-    STF_PASS ( "Expecting: " << ::stf::white_(STF_STRING(A) " == " STF_STRING(B))       \
-                                << " within " << ::stf::white_(X) << " ULPs."                    \
+  auto stf_local_r = STF_DECOMPOSE((A) == ::stf::ulp(B,X));                                                   \
+  if( stf_local_r )                                                                                           \
+    STF_PASS ( "Expecting: " << ::stf::white_(STF_STRING(A) " == " STF_STRING(B))                   \
+                                << " within " << ::stf::white_(X) << " ULPs."                       \
                 );                                                                                  \
   else                                                                                              \
-    STF_FAIL ( "Expecting: " << ::stf::white_(STF_STRING(A) " == " STF_STRING(B))       \
-                                << " within " << ::stf::white_(X) << " ULPs "                    \
-                                << "but found:\n" << ::stf::white_(r.rhs)                        \
+    STF_FAIL ( "Expecting: " << ::stf::white_(STF_STRING(A) " == " STF_STRING(B))                   \
+                                << " within " << ::stf::white_(X) << " ULPs "                       \
+                                << "but found:\n" << ::stf::white_(stf_local_r.rhs)                           \
                 );                                                                                  \
-} while( ::stf::is_false() )                                                                     \
+} while( ::stf::is_false() )                                                                        \
 /**/
 
 
@@ -72,20 +72,20 @@ do                                                                              
   @param B Second expression to compare
   @param X Relative tolerance
 **/
-#define STF_RELATIVE_EQUAL(A,B,X)                                                                \
+#define STF_RELATIVE_EQUAL(A,B,X)                                                                   \
 do                                                                                                  \
 {                                                                                                   \
-  auto r = STF_DECOMPOSE((A) == ::stf::relative(B,X));                                        \
-  if( r )                                                                                           \
-    STF_PASS ( "Expecting: " << ::stf::white_(STF_STRING(A) " == " STF_STRING(B))       \
-                                << " within " << ::stf::white_(X) << " %."                       \
+  auto stf_local_r = STF_DECOMPOSE((A) == ::stf::relative(B,X));                                    \
+  if( stf_local_r )                                                                                 \
+    STF_PASS ( "Expecting: " << ::stf::white_(STF_STRING(A) " == " STF_STRING(B))                   \
+                                << " within " << ::stf::white_(X) << " %."                          \
                 );                                                                                  \
   else                                                                                              \
-    STF_FAIL ( "Expecting: " << ::stf::white_(STF_STRING(A) " == " STF_STRING(B))       \
-                                << " within " << ::stf::white_(X) << " % "                       \
-                                << "but found:\n" << ::stf::white_(r.rhs)                        \
+    STF_FAIL ( "Expecting: " << ::stf::white_(STF_STRING(A) " == " STF_STRING(B))                   \
+                                << " within " << ::stf::white_(X) << " % "                          \
+                                << "but found:\n" << ::stf::white_(stf_local_r.rhs)                 \
                 );                                                                                  \
-} while( ::stf::is_false() )                                                                     \
+} while( ::stf::is_false() )                                                                        \
 /**/
 
 #endif

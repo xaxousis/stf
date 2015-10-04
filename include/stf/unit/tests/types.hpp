@@ -39,21 +39,23 @@
   @param T    First type to compare
   @param Type Second type to compare
 **/
-#define STF_TYPE_IS(T, Type)                                                                     \
+#define STF_TYPE_IS(T, Type)                                                                        \
 do                                                                                                  \
 {                                                                                                   \
-  volatile bool b = std::is_same<BOOST_PP_REMOVE_PARENS(Type), BOOST_PP_REMOVE_PARENS(T)>::value;   \
-  if( b )                                                                                           \
-    STF_PASS (   "Expecting " << ::stf::white_ << STF_STRING(BOOST_PP_REMOVE_PARENS(T))    \
-                <<  " == " << stf::type_id<BOOST_PP_REMOVE_PARENS(Type)>() << ::stf::default_ \
+  volatile bool stf_local_b = std::is_same< BOOST_PP_REMOVE_PARENS(Type)                            \
+                                          , BOOST_PP_REMOVE_PARENS(T)                               \
+                                          >::value;                                                 \
+  if( stf_local_b )                                                                                 \
+    STF_PASS (   "Expecting " << ::stf::white_ << STF_STRING(BOOST_PP_REMOVE_PARENS(T))             \
+                <<  " == " << stf::type_id<BOOST_PP_REMOVE_PARENS(Type)>() << ::stf::default_       \
                 );                                                                                  \
   else                                                                                              \
-    STF_FAIL (   "Expecting " << ::stf::white_(STF_STRING(BOOST_PP_REMOVE_PARENS(T)))      \
-                <<  " == " << ::stf::white_(stf::type_id<BOOST_PP_REMOVE_PARENS(Type)>())     \
-                <<  " found " << ::stf::white_(stf::type_id<BOOST_PP_REMOVE_PARENS(T)>())     \
+    STF_FAIL (   "Expecting " << ::stf::white_(STF_STRING(BOOST_PP_REMOVE_PARENS(T)))               \
+                <<  " == " << ::stf::white_(stf::type_id<BOOST_PP_REMOVE_PARENS(Type)>())           \
+                <<  " found " << ::stf::white_(stf::type_id<BOOST_PP_REMOVE_PARENS(T)>())           \
                 <<  " instead"                                                                      \
                 );                                                                                  \
-} while( ::stf::is_false() )                                                                     \
+} while( ::stf::is_false() )                                                                        \
 /**/
 
 /*!
@@ -70,8 +72,8 @@ do                                                                              
   @param Expression Expression to test type
   @param Type       Second type to compare
 **/
-#define STF_EXPR_IS(Expression, Type)                                                            \
-STF_TYPE_IS(decltype( BOOST_PP_REMOVE_PARENS(Expression)), Type)                                 \
+#define STF_EXPR_IS(Expression, Type)                                                               \
+STF_TYPE_IS(decltype( BOOST_PP_REMOVE_PARENS(Expression)), Type)                                    \
 /**/
 
 /*!
@@ -90,32 +92,32 @@ STF_TYPE_IS(decltype( BOOST_PP_REMOVE_PARENS(Expression)), Type)                
   @param Lambda     Meta-lambda function following MPL protocol to apply
   @param Type       Expected result of the application of Lambda on the type of Expression
 **/
-#define STF_EXPR_TYPE(Expression, Lambda, Type)                                                  \
+#define STF_EXPR_TYPE(Expression, Lambda, Type)                                                     \
 do                                                                                                  \
 {                                                                                                   \
   using other = boost::mpl::apply < BOOST_PP_REMOVE_PARENS(Lambda)                                  \
                                   , decltype(BOOST_PP_REMOVE_PARENS(Expression))                    \
                                   >::type;                                                          \
                                                                                                     \
-  volatile bool b = std::is_same<BOOST_PP_REMOVE_PARENS(Type), other>::value;                       \
-  if( b )                                                                                           \
-    STF_PASS (   "Expecting "                                                                    \
-                << ::stf::white_(STF_STRING(BOOST_PP_REMOVE_PARENS(Lambda)))                  \
+  volatile bool stf_local_b = std::is_same<BOOST_PP_REMOVE_PARENS(Type), other>::value;             \
+  if( stf_local_b )                                                                                 \
+    STF_PASS (   "Expecting "                                                                       \
+                << ::stf::white_(STF_STRING(BOOST_PP_REMOVE_PARENS(Lambda)))                        \
                 << " applied on "                                                                   \
-                << ::stf::white_(stf::type_id(BOOST_PP_REMOVE_PARENS(Expression)))            \
+                << ::stf::white_(stf::type_id(BOOST_PP_REMOVE_PARENS(Expression)))                  \
                 <<  " to be "                                                                       \
-                << ::stf::white_(stf::type_id<BOOST_PP_REMOVE_PARENS(Type)>())                \
+                << ::stf::white_(stf::type_id<BOOST_PP_REMOVE_PARENS(Type)>())                      \
                 );                                                                                  \
   else                                                                                              \
-    STF_FAIL(   "Expecting "                                                                     \
-                << ::stf::white_(STF_STRING(BOOST_PP_REMOVE_PARENS(Lambda)))                  \
+    STF_FAIL(   "Expecting "                                                                        \
+                << ::stf::white_(STF_STRING(BOOST_PP_REMOVE_PARENS(Lambda)))                        \
                 << " applied on "                                                                   \
-                << ::stf::white_(stf::type_id(BOOST_PP_REMOVE_PARENS(Expression)))            \
+                << ::stf::white_(stf::type_id(BOOST_PP_REMOVE_PARENS(Expression)))                  \
                 <<  " to be "                                                                       \
-                << ::stf::white_(stf::type_id<BOOST_PP_REMOVE_PARENS(Type)>())                \
-                << " but found " << ::stf::white_(stf::type_id<other>()) << " instead"        \
+                << ::stf::white_(stf::type_id<BOOST_PP_REMOVE_PARENS(Type)>())                      \
+                << " but found " << ::stf::white_(stf::type_id<other>()) << " instead"              \
                 );                                                                                  \
-} while( ::stf::is_false() )                                                                     \
+} while( ::stf::is_false() )                                                                        \
 /**/
 
 #endif

@@ -36,24 +36,24 @@
   @param X Expression to test
   @param T Exception type expected to be thrown
 **/
-#define STF_THROW( X, T )                                                                        \
+#define STF_THROW( X, T )                                                                           \
 do                                                                                                  \
 {                                                                                                   \
   bool caught = false;                                                                              \
-  try                                 { STF_UNUSED(BOOST_PP_REMOVE_PARENS(X)); }                 \
+  try                                 { STF_UNUSED(BOOST_PP_REMOVE_PARENS(X)); }                    \
   catch( BOOST_PP_REMOVE_PARENS(T)& ) { caught = true; }                                            \
                                                                                                     \
   if(caught)                                                                                        \
-    STF_PASS (   ::stf::white_(STF_STRING(X))                                              \
+    STF_PASS (   ::stf::white_(STF_STRING(X))                                                       \
                 <<  " throws "                                                                      \
-                <<  ::stf::white_(STF_STRING(T))                                              \
+                <<  ::stf::white_(STF_STRING(T))                                                    \
                 );                                                                                  \
   else                                                                                              \
-    STF_FAIL(   ::stf::white_(STF_STRING(X))                                               \
+    STF_FAIL(   ::stf::white_(STF_STRING(X))                                                        \
                 <<  " does not throw "                                                              \
-                <<  ::stf::white_(STF_STRING(T))                                              \
+                <<  ::stf::white_(STF_STRING(T))                                                    \
                 );                                                                                  \
-} while( ::stf::is_false() )                                                                     \
+} while( ::stf::is_false() )                                                                        \
 /**/
 
 /*!
@@ -70,18 +70,18 @@ do                                                                              
 
   @param X Expression to test
 **/
-#define STF_NO_THROW( X )                                                                        \
+#define STF_NO_THROW( X )                                                                           \
 do                                                                                                  \
 {                                                                                                   \
   bool caught = false;                                                                              \
-  try          { STF_UNUSED(BOOST_PP_REMOVE_PARENS(X)); }                                        \
+  try          { STF_UNUSED(BOOST_PP_REMOVE_PARENS(X)); }                                           \
   catch( ... ) { caught = true; }                                                                   \
                                                                                                     \
   if(caught)                                                                                        \
-    STF_FAIL( ::stf::white_(STF_STRING(X)) << " throws while not expected to" );           \
+    STF_FAIL( ::stf::white_(STF_STRING(X)) << " throws while not expected to" );                    \
   else                                                                                              \
-    STF_PASS( ::stf::white_(STF_STRING(X)) << " doesn't throw" );                          \
-} while( ::stf::is_false() )                                                                     \
+    STF_PASS( ::stf::white_(STF_STRING(X)) << " doesn't throw" );                                   \
+} while( ::stf::is_false() )                                                                        \
 /**/
 
 /*!
@@ -99,20 +99,20 @@ do                                                                              
 
   @param X Expression to test
 **/
-#define STF_ASSERT(X)                                                                            \
+#define STF_ASSERT(X)                                                                               \
 do                                                                                                  \
 {                                                                                                   \
   bool caught = false;                                                                              \
-  try  { STF_UNUSED(BOOST_PP_REMOVE_PARENS(X)); }                                                \
-  catch( ::stf::detail::assertion_failure& e)                                                    \
+  try  { STF_UNUSED(BOOST_PP_REMOVE_PARENS(X)); }                                                   \
+  catch( ::stf::detail::assertion_failure& e)                                                       \
   {                                                                                                 \
     caught = true;                                                                                  \
-    STF_PASS( ::stf::white_(STF_STRING(X)) << " triggered: \n" << e << "\n" );             \
+    STF_PASS( ::stf::white_(STF_STRING(X)) << " triggered: \n" << e << "\n" );                      \
   }                                                                                                 \
                                                                                                     \
   if(!caught)                                                                                       \
-    STF_FAIL( ::stf::white_(STF_STRING(X)) << " didn't trigger any assertion." );          \
-} while( ::stf::is_false() )                                                                     \
+    STF_FAIL( ::stf::white_(STF_STRING(X)) << " didn't trigger any assertion." );                   \
+} while( ::stf::is_false() )                                                                        \
 /**/
 
 /*!
@@ -130,20 +130,20 @@ do                                                                              
 
   @param X Expression to test
 **/
-#define STF_NO_ASSERT(X)                                                                         \
+#define STF_NO_ASSERT(X)                                                                            \
 do                                                                                                  \
 {                                                                                                   \
   bool caught = false;                                                                              \
-  try  { STF_UNUSED(BOOST_PP_REMOVE_PARENS(X)); }                                                \
-  catch( ::stf::detail::assertion_failure& e)                                                    \
+  try  { STF_UNUSED(BOOST_PP_REMOVE_PARENS(X)); }                                                   \
+  catch( ::stf::detail::assertion_failure& e)                                                       \
   {                                                                                                 \
     caught = true;                                                                                  \
-    STF_FAIL( ::stf::white_(STF_STRING(X)) << " triggered: \n" << e << "\n" );             \
+    STF_FAIL( ::stf::white_(STF_STRING(X)) << " triggered: \n" << e << "\n" );                      \
   }                                                                                                 \
                                                                                                     \
   if(!caught)                                                                                       \
-    STF_PASS( ::stf::white_(STF_STRING(X)) << " didn't trigger any assertion." );          \
-} while( ::stf::is_false() )                                                                     \
+    STF_PASS( ::stf::white_(STF_STRING(X)) << " didn't trigger any assertion." );                   \
+} while( ::stf::is_false() )                                                                        \
 /**/
 
 #endif
