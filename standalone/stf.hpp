@@ -796,10 +796,10 @@ namespace stf
     mutable std::vector<error>  errors;
   };
     template<typename Measure, typename Reference>
-  std::string to_string( approx_<Measure,Reference> const& u )
+  std::ostream& operator<<( std::ostream& os, approx_<Measure,Reference> const& u )
   {
     using stf::to_string;
-    if(u.mismatched()) return "arguments with mismatched size.";
+    if(u.mismatched()) return os << "arguments with mismatched size.";
     std::ostringstream s,ls;
         ls.precision(20);
     for(auto const& e : u.report())
@@ -810,7 +810,7 @@ namespace stf
     }
         s.precision(20);
     Measure::to_stream(s,u.max());
-    return "{\n"  + ls.str() + "}\n with a maximal error of " + s.str();
+    return os << "{\n"  + ls.str() + "}\n with a maximal error of " + s.str();
   }
     template<typename Measure, typename Reference, typename U>
   inline bool isequaln(U const& l, approx_<Measure, Reference> const& r)
@@ -933,17 +933,17 @@ namespace stf
   inline double reldist(bool a0, bool a1) { return a0 == a1 ? 0. : 1.; }
   template<typename T,typename U> using dependent = U;
   template<typename T>
-  inline detail::if_integral<T,double> reldist(T const& a0, T const& a1)
-  {
-    dependent<T,double> d0 = static_cast<double>(a0), d1 = static_cast<double>(a1);
-    return reldist(d0,d1);
-  }
-  template<typename T>
   inline detail::if_real<T,double> reldist(T const& a0, T const& a1)
   {
     if( (a0 == a1) || ((a0!=a0) && (a1!=a1)) )  return 0.;
     if( (a0!=a0) || (a1!=a1) )                  return std::numeric_limits<T>::infinity();
     return std::abs(a0-a1) / std::max(T(1), std::max(std::abs(a0),std::abs(a1)));
+  }
+  template<typename T>
+  inline detail::if_integral<T,double> reldist(T const& a0, T const& a1)
+  {
+    dependent<T,double> d0 = static_cast<double>(a0), d1 = static_cast<double>(a1);
+    return reldist(d0,d1);
   }
   template<typename T>
   inline detail::if_container<T,std::vector<double>> reldist(T const& a0, T const& a1)
