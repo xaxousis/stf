@@ -75,19 +75,19 @@ namespace stf
   template<typename T,typename U> using dependent = U;
 
   template<typename T>
-  inline detail::if_integral<T,double> reldist(T const& a0, T const& a1)
-  {
-    dependent<T,double> d0 = static_cast<double>(a0), d1 = static_cast<double>(a1);
-    return reldist(d0,d1);
-  }
-
-  template<typename T>
   inline detail::if_real<T,double> reldist(T const& a0, T const& a1)
   {
     if( (a0 == a1) || ((a0!=a0) && (a1!=a1)) )  return 0.;
     if( (a0!=a0) || (a1!=a1) )                  return std::numeric_limits<T>::infinity();
 
     return std::abs(a0-a1) / std::max(T(1), std::max(std::abs(a0),std::abs(a1)));
+  }
+
+  template<typename T>
+  inline detail::if_integral<T,double> reldist(T const& a0, T const& a1)
+  {
+    dependent<T,double> d0 = static_cast<double>(a0), d1 = static_cast<double>(a1);
+    return reldist(d0,d1);
   }
 
   template<typename T>
