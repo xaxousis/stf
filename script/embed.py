@@ -24,7 +24,6 @@ import argparse
 default_includes_path = ['.']
 
 # pp tokens regexp
-r_empty_line = re.compile('^[ \t]*\n$')
 r_pp_include = re.compile('^\s*#\s*include\s+["|<](.*)["|>]$')
 r_pp_ifndef = re.compile('^\s*#\s*ifndef\s+(.*)\s*$')
 r_pp_if_defined = re.compile('^\s*#\s*if\s+defined\(\s*(.*)\s*\)\s*$')
@@ -93,9 +92,6 @@ Preprocess a single line
 def pp_line(line, output, opts):
     global keep_guard
     global in_C_block_comments
-    if r_empty_line.match(line):
-        # skip empty lines
-        return
     if not keep_guard:
         # C comments (one line) '//'
         if r_C_one_line_comment.match(line):
