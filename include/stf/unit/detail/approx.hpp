@@ -79,11 +79,11 @@ namespace stf
 
   // Streaming approx_ builds the report
   template<typename Measure, typename Reference>
-  std::string to_string( approx_<Measure,Reference> const& u )
+  std::ostream& operator<<( std::ostream& os, approx_<Measure,Reference> const& u )
   {
     using stf::to_string;
 
-    if(u.mismatched()) return "arguments with mismatched size.";
+    if(u.mismatched()) return os << "arguments with mismatched size.";
 
     std::ostringstream s,ls;
 
@@ -101,7 +101,7 @@ namespace stf
     s.precision(20);
     Measure::to_stream(s,u.max());
 
-    return "{\n"  + ls.str() + "}\n with a maximal error of " + s.str();
+    return os << "{\n"  + ls.str() + "}\n with a maximal error of " + s.str();
   }
 
   // ADL compare_equal for approx_
