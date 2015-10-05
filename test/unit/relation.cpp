@@ -17,11 +17,15 @@ namespace foo
 {
   struct bar { float v; };
 
-  bool isequaln             (bar const& a, bar const& b)  { return a.v == b.v; }
-  bool compare_less         (bar const& a, bar const& b)  { return a.v <  b.v; }
-  bool compare_less_equal   (bar const& a, bar const& b)  { return a.v <= b.v; }
-  bool compare_greater      (bar const& a, bar const& b)  { return a.v >  b.v; }
-  bool compare_greater_equal(bar const& a, bar const& b)  { return a.v >= b.v; }
+  bool compare_equal(bar const& a, bar const& b)
+  {
+    return stf::compare_equal(a.v,b.v);
+  }
+
+  bool compare_less(bar const& a, bar const& b)
+  {
+    return stf::compare_less(a.v,b.v);
+  }
 }
 //! [bar]
 
@@ -94,13 +98,3 @@ STF_CASE( "Check correctness of greater-or-equal-than tests" )
   STF_GREATER_EQUAL(y,y);
 }
 //! [greater_equal]
-
-STF_CASE( "Check correctness of tests for NaNs" )
-{
-  float x = std::numeric_limits<float>::quiet_NaN(),y{0.3f};
-  std::vector<float> a{x,x,x}, b{1,2,3};
-
-  // NaN == NaN is desirable behavior
-  STF_EQUAL(x,x);
-  STF_EQUAL(a,a);
-}

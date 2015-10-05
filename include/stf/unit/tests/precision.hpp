@@ -58,6 +58,24 @@ do                                                                              
 /*!
   @ingroup group-unit
 
+  @brief Check for equality within IEEE rules
+
+  Evaluates @c A and @c B and checks if their respective value(s) are equal at 0 ULPs or
+  are both NaNs. This test is performed by calling the default @c stf::ulpdist function or any
+  ADL-accessible overload on each values from @c A and @c B.
+
+  @par Example:
+
+  @snippet test/unit/ulp.cpp ieee
+
+  @param A First expression to compare
+  @param B Second expression to compare
+**/
+#define STF_IEEE_EQUAL(A,B)  STF_ULP_EQUAL(A,B,0.)
+
+/*!
+  @ingroup group-unit
+
   @brief Check for equality within a relative distance
 
   Evaluates @c A and @c B and checks if their respective value(s) are within a relative tolerance

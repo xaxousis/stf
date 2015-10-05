@@ -51,12 +51,12 @@ namespace stf { namespace detail
     }                                                                                               \
     /**/
 
-    STF_BINARY_DECOMPOSE( ==,  "==", isequaln              )
-    STF_BINARY_DECOMPOSE( !=,  "!=", compare_not_equal     )
-    STF_BINARY_DECOMPOSE( < ,  "<" , compare_less          )
-    STF_BINARY_DECOMPOSE( <=,  "<=", compare_less_equal    )
-    STF_BINARY_DECOMPOSE( > ,  ">" , compare_greater       )
-    STF_BINARY_DECOMPOSE( >=,  ">=", compare_greater_equal )
+    STF_BINARY_DECOMPOSE( ==, "==", eq  )
+    STF_BINARY_DECOMPOSE( !=, "!=", neq )
+    STF_BINARY_DECOMPOSE( < , "<" , lt  )
+    STF_BINARY_DECOMPOSE( > , ">" , gt  )
+    STF_BINARY_DECOMPOSE( >=, ">=", ge  )
+    STF_BINARY_DECOMPOSE( <=, "<=", le  )
 
     #undef STF_BINARY_DECOMPOSE
   };

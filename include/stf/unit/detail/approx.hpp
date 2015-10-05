@@ -106,7 +106,7 @@ namespace stf
 
   // ADL compare_equal for approx_
   template<typename Measure, typename Reference, typename U>
-  inline bool isequaln(U const& l, approx_<Measure, Reference> const& r)
+  inline bool compare_equal(U const& l, approx_<Measure, Reference> const& r)
   {
     return r.compare(l);
   }
