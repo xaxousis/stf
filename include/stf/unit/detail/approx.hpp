@@ -15,6 +15,8 @@
 #ifndef STF_UNIT_DETAIL_APPROX_HPP_INCLUDED
 #define STF_UNIT_DETAIL_APPROX_HPP_INCLUDED
 
+#include <stf/common/detail/is_container.hpp>
+#include <stf/common/to_string.hpp>
 #include <vector>
 #include <string>
 

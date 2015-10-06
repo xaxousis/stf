@@ -31,10 +31,8 @@ namespace stf { namespace detail
 
   @param R Result structure to dump
 **/
-#define STF_DUMP(R)                                                                              \
-$.stream()  << "failing because:\n"                                                                 \
-            << ::stf::white_(R.lhs) << R.op << ::stf::white_(R.rhs) << "\n"                   \
-            << "is incorrect.\n";                                                                   \
+#define STF_DUMP(R)                                                                                 \
+$.stream()  << "failing because:\n" << R.lhs << R.op << R.rhs << "\n" << "is incorrect.\n";         \
 /**/
 
 #endif

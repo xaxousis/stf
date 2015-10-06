@@ -16,7 +16,6 @@
 #define STF_UNIT_TESTS_TYPES_HPP_INCLUDED
 
 #include <type_traits>
-#include <stf/common/color.hpp>
 #include <stf/common/string.hpp>
 #include <stf/common/type_id.hpp>
 #include <stf/unit/tests/basic.hpp>
@@ -45,13 +44,13 @@ do                                                                              
                                           , BOOST_PP_REMOVE_PARENS(T)                               \
                                           >::value;                                                 \
   if( stf_local_b )                                                                                 \
-    STF_PASS (   "Expecting " << ::stf::white_ << STF_STRING(BOOST_PP_REMOVE_PARENS(T))             \
-                <<  " == " << stf::type_id<BOOST_PP_REMOVE_PARENS(Type)>() << ::stf::default_       \
+    STF_PASS (   "Expecting " << STF_STRING(BOOST_PP_REMOVE_PARENS(T))                              \
+                <<  " == " << stf::type_id<BOOST_PP_REMOVE_PARENS(Type)>()                          \
                 );                                                                                  \
   else                                                                                              \
-    STF_FAIL (   "Expecting " << ::stf::white_(STF_STRING(BOOST_PP_REMOVE_PARENS(T)))               \
-                <<  " == " << ::stf::white_(stf::type_id<BOOST_PP_REMOVE_PARENS(Type)>())           \
-                <<  " found " << ::stf::white_(stf::type_id<BOOST_PP_REMOVE_PARENS(T)>())           \
+    STF_FAIL (   "Expecting " << STF_STRING(BOOST_PP_REMOVE_PARENS(T))                              \
+                <<  " == " << stf::type_id<BOOST_PP_REMOVE_PARENS(Type)>()                          \
+                <<  " found " << stf::type_id<BOOST_PP_REMOVE_PARENS(T)>()                          \
                 <<  " instead"                                                                      \
                 );                                                                                  \
 } while( ::stf::is_false() )                                                                        \
@@ -101,20 +100,20 @@ do                                                                              
   volatile bool stf_local_b = std::is_same<BOOST_PP_REMOVE_PARENS(Type), other>::value;             \
   if( stf_local_b )                                                                                 \
     STF_PASS (   "Expecting "                                                                       \
-                << ::stf::white_(STF_STRING(BOOST_PP_REMOVE_PARENS(Lambda)))                        \
+                << STF_STRING(BOOST_PP_REMOVE_PARENS(Lambda))                                       \
                 << " applied on "                                                                   \
-                << ::stf::white_(stf::type_id(BOOST_PP_REMOVE_PARENS(Expression)))                  \
+                << stf::type_id(BOOST_PP_REMOVE_PARENS(Expression))                                 \
                 <<  " to be "                                                                       \
-                << ::stf::white_(stf::type_id<BOOST_PP_REMOVE_PARENS(Type)>())                      \
+                << stf::type_id<BOOST_PP_REMOVE_PARENS(Type)>()                                     \
                 );                                                                                  \
   else                                                                                              \
     STF_FAIL(   "Expecting "                                                                        \
-                << ::stf::white_(STF_STRING(BOOST_PP_REMOVE_PARENS(Lambda)))                        \
+                << STF_STRING(BOOST_PP_REMOVE_PARENS(Lambda))                                       \
                 << " applied on "                                                                   \
-                << ::stf::white_(stf::type_id(BOOST_PP_REMOVE_PARENS(Expression)))                  \
+                << stf::type_id(BOOST_PP_REMOVE_PARENS(Expression))                                 \
                 <<  " to be "                                                                       \
-                << ::stf::white_(stf::type_id<BOOST_PP_REMOVE_PARENS(Type)>())                      \
-                << " but found " << ::stf::white_(stf::type_id<other>()) << " instead"              \
+                << stf::type_id<BOOST_PP_REMOVE_PARENS(Type)>()                                     \
+                << " but found " << stf::type_id<other>() << " instead"                             \
                 );                                                                                  \
 } while( ::stf::is_false() )                                                                        \
 /**/

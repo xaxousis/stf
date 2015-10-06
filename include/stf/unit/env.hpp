@@ -15,7 +15,6 @@
 #ifndef STF_UNIT_ENV_HPP_INCLUDED
 #define STF_UNIT_ENV_HPP_INCLUDED
 
-#include <stf/common/color.hpp>
 #include <stf/common/args.hpp>
 #include <iostream>
 #include <cstddef>
@@ -80,18 +79,18 @@ namespace stf
       std::ostream& stream() const { return os; }
 
       /// Insert a "[PASS]" message into the stream
-      std::ostream& pass()    const { return os << green_("[PASS]") << " - "; }
+      std::ostream& pass()    const { return os << "[PASS]" << " - "; }
 
       /// Insert a "[FAIL]" message into the stream
-      std::ostream& fail()    const { return os << red_("[FAIL]") << " - "; }
+      std::ostream& fail()    const { return os << "[FAIL]" << " - "; }
 
       /// Insert a "[IVLD]" message into the stream
       std::ostream& invalid() const
       {
         if(compact_mode)
-          return os << yellow_("I");
+          return os << "I";
         else
-          return os << yellow_("[IVLD]") << " - ";
+          return os << "[IVLD]" << " - ";
       }
 
       // Can't be generated due ton reference to ostream member
@@ -119,12 +118,12 @@ namespace stf
     auto fail_txt = e.failures()  > 1 ? "failures"  : "failure";
     auto inv_txt  = e.invalids()  > 1 ? "invalids"  : "invalid";
 
-    e.stream()  << default_ << std::string(80,'-') << "\n"
-      << white_("Results: ")
-      << white_(e.tests())  << " "    << white_(test_txt) << " - "
-      << white_(e.successes()) << " " << green_(pass_txt) << " - "
-      << white_(e.failures()) << "/"  << fails     << " " << red_(fail_txt) << " - "
-      << white_(e.invalids()) << "/"  << invalids  << " " << yellow_(inv_txt)
+    e.stream()  << std::string(80,'-') << "\n"
+      << "Results: "
+      << e.tests()  << " "    << test_txt << " - "
+      << e.successes() << " " << pass_txt << " - "
+      << e.failures() << "/"  << fails     << " " << fail_txt << " - "
+      << e.invalids() << "/"  << invalids  << " " << inv_txt
       << std::endl;
 
     if(!fails && !invalids)
@@ -148,12 +147,12 @@ namespace stf
     {
       auto hbar = std::string(80,'-');
       env.stream()  << hbar << std::endl
-                    << "Scenario: " << ::stf::white_(t.name) << std::endl
+                    << "Scenario: " << t.name << std::endl
                     << hbar << std::endl;
     }
     else
     {
-      env.stream()  << "Scenario: " << ::stf::white_(t.name) << " : ";
+      env.stream()  << "Scenario: " << t.name << " : ";
     }
   }
 
@@ -171,9 +170,9 @@ namespace stf
     {
       env.as_invalid();
       if(!env.is_compact())
-        env.invalid() << ::stf::white_("Empty test case") << std::endl;
+        env.invalid() << "Empty test case" << std::endl;
       else
-        env.stream() << ::stf::yellow_("!");
+        env.stream() << "!";
     }
   }
 }

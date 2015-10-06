@@ -31,8 +31,7 @@ namespace stf
       {
         // List of environment variable to map onto options
         std::pair<std::string,std::string>
-        envvars[] = { {"STF_COLOR"   , "color"}
-                    , {"STF_COMPACT" , "compact"}
+        envvars[] = { {"STF_COMPACT" , "compact"}
                     };
 
         // fill map with environment variable

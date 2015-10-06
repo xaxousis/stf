@@ -43,15 +43,9 @@ do                                                                              
   catch( BOOST_PP_REMOVE_PARENS(T)& ) { caught = true; }                                            \
                                                                                                     \
   if(caught)                                                                                        \
-    STF_PASS (   ::stf::white_(STF_STRING(X))                                                       \
-                <<  " throws "                                                                      \
-                <<  ::stf::white_(STF_STRING(T))                                                    \
-                );                                                                                  \
+    STF_PASS( STF_STRING(X) <<  " throws " <<  STF_STRING(T) );                                     \
   else                                                                                              \
-    STF_FAIL(   ::stf::white_(STF_STRING(X))                                                        \
-                <<  " does not throw "                                                              \
-                <<  ::stf::white_(STF_STRING(T))                                                    \
-                );                                                                                  \
+    STF_FAIL( STF_STRING(X) <<  " does not throw " <<  STF_STRING(T) );                             \
 } while( ::stf::is_false() )                                                                        \
 /**/
 
@@ -77,9 +71,9 @@ do                                                                              
   catch( ... ) { caught = true; }                                                                   \
                                                                                                     \
   if(caught)                                                                                        \
-    STF_FAIL( ::stf::white_(STF_STRING(X)) << " throws while not expected to" );                    \
+    STF_FAIL( STF_STRING(X) << " throws while not expected to" );                                   \
   else                                                                                              \
-    STF_PASS( ::stf::white_(STF_STRING(X)) << " doesn't throw" );                                   \
+    STF_PASS( STF_STRING(X) << " doesn't throw" );                                                  \
 } while( ::stf::is_false() )                                                                        \
 /**/
 
@@ -106,11 +100,11 @@ do                                                                              
   catch( ::stf::detail::assertion_failure& e)                                                       \
   {                                                                                                 \
     caught = true;                                                                                  \
-    STF_PASS( ::stf::white_(STF_STRING(X)) << " triggered: \n" << e << "\n" );                      \
+    STF_PASS( STF_STRING(X) << " triggered: \n" << e << "\n" );                                     \
   }                                                                                                 \
                                                                                                     \
   if(!caught)                                                                                       \
-    STF_FAIL( ::stf::white_(STF_STRING(X)) << " didn't trigger any assertion." );                   \
+    STF_FAIL( STF_STRING(X) << " didn't trigger any assertion." );                                  \
 } while( ::stf::is_false() )                                                                        \
 /**/
 
@@ -137,11 +131,11 @@ do                                                                              
   catch( ::stf::detail::assertion_failure& e)                                                       \
   {                                                                                                 \
     caught = true;                                                                                  \
-    STF_FAIL( ::stf::white_(STF_STRING(X)) << " triggered: \n" << e << "\n" );                      \
+    STF_FAIL( STF_STRING(X) << " triggered: \n" << e << "\n" );                                     \
   }                                                                                                 \
                                                                                                     \
   if(!caught)                                                                                       \
-    STF_PASS( ::stf::white_(STF_STRING(X)) << " didn't trigger any assertion." );                   \
+    STF_PASS( STF_STRING(X) << " didn't trigger any assertion." );                                  \
 } while( ::stf::is_false() )                                                                        \
 /**/
 

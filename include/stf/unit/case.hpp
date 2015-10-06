@@ -47,24 +47,24 @@
 
   @param DESCRIPTION String literal describing the purpose of the test case
 **/
-#define STF_CASE(DESCRIPTION)                                                                    \
-void STF_FUNCTION( ::stf::unit::env& );                                                        \
+#define STF_CASE(DESCRIPTION)                                                                       \
+void STF_FUNCTION( ::stf::unit::env& );                                                             \
 namespace                                                                                           \
 {                                                                                                   \
-  ::stf::detail::registrar                                                                       \
-  STF_REGISTRATION{::stf::unit::test(DESCRIPTION, STF_FUNCTION)};                            \
+  ::stf::detail::registrar                                                                          \
+  STF_REGISTRATION{::stf::unit::test(DESCRIPTION, STF_FUNCTION)};                                   \
 }                                                                                                   \
-void STF_FUNCTION( ::stf::unit::env& $ )                                                       \
+void STF_FUNCTION( ::stf::unit::env& $ )                                                            \
 /**/
 
-#define STF_RTYPE(z, n, t)                                                                        \
+#define STF_RTYPE(z, n, t)                                                                          \
 {                                                                                                   \
   using T = BOOST_PP_SEQ_ELEM(n,t);                                                                 \
   $.stream() << std::endl;                                                                          \
-  $.stream() <<  "With T = [" << ::stf::white_(STF_STRING(BOOST_PP_SEQ_ELEM(n,t)))            \
+  $.stream() <<  "With T = [" << STF_STRING(BOOST_PP_SEQ_ELEM(n,t))                                 \
                         << "] ";                                                                    \
   if(!$.is_compact()) $.stream() << std::endl;                                                      \
-  STF_FUNCTION<T>($);                                                                             \
+  STF_FUNCTION<T>($);                                                                               \
 }                                                                                                   \
 /**/
 
@@ -86,21 +86,21 @@ void STF_FUNCTION( ::stf::unit::env& $ )                                        
   @param DESCRIPTION  String literal describing the scope of the test case
   @param TYPES        Boost.Preprocessor sequence of types
 **/
-#define STF_CASE_TPL(DESCRIPTION, TYPES)                                                         \
-template<typename T> void STF_FUNCTION( stf::unit::env& );                                     \
+#define STF_CASE_TPL(DESCRIPTION, TYPES)                                                            \
+template<typename T> void STF_FUNCTION( stf::unit::env& );                                          \
 namespace                                                                                           \
 {                                                                                                   \
-  stf::detail::registrar                                                                         \
-  STF_REGISTRATION{ stf::unit::test                                                            \
+  stf::detail::registrar                                                                            \
+  STF_REGISTRATION{ stf::unit::test                                                                 \
                       ( DESCRIPTION                                                                 \
-                      , [](::stf::unit::env& $) -> void                                          \
+                      , [](::stf::unit::env& $) -> void                                             \
                         {                                                                           \
-                          BOOST_PP_REPEAT(BOOST_PP_SEQ_SIZE(TYPES),STF_RTYPE,TYPES)               \
+                          BOOST_PP_REPEAT(BOOST_PP_SEQ_SIZE(TYPES),STF_RTYPE,TYPES)                 \
                         }                                                                           \
                       )                                                                             \
                     };                                                                              \
 }                                                                                                   \
-template<typename T> void STF_FUNCTION( stf::unit::env& $ )                                    \
+template<typename T> void STF_FUNCTION( stf::unit::env& $ )                                         \
 /**/
 
 #endif

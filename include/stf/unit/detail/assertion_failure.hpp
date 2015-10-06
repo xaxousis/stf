@@ -54,11 +54,11 @@ namespace stf { namespace detail
     auto l    = boost::get_error_info< ::boost::throw_line >(e);
     auto msg  = boost::get_error_info< ::stf::detail::throw_message >(e);
 
-    os  << "Assertion    '"  << ::stf::white_(e.what()) << "' failed\n"
-        << " in function '"  << ::stf::white_(*fn) << "'\n"
+    os  << "Assertion    '"  << e.what() << "' failed\n"
+        << " in function '"  << *fn << "'\n"
         << " from         "  << ::stf::at(*f,*l)    << " \n";
 
-    if(msg)  os << " because     '"  << ::stf::white_(*msg) << "'";
+    if(msg)  os << " because     '"  << *msg << "'";
 
     return os;
   }

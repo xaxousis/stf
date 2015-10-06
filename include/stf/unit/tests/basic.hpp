@@ -33,10 +33,10 @@
 do                                                                                                  \
 {                                                                                                   \
   if( ::stf::detail::result stf_local_r = STF_DECOMPOSE(EXPR) )                                     \
-    STF_PASS( "Expecting: " << ::stf::white_(STF_STRING(EXPR)) );                                   \
+    STF_PASS( "Expecting: " << STF_STRING(EXPR));                                                   \
   else                                                                                              \
   {                                                                                                 \
-    STF_FAIL( "Expecting: " << ::stf::white_(STF_STRING(EXPR)) );                                   \
+    STF_FAIL( "Expecting: " << STF_STRING(EXPR));                                                   \
     if(!$.is_compact()) STF_DUMP( stf_local_r );                                                    \
   }                                                                                                 \
 } while( ::stf::is_false() )                                                                        \
@@ -57,11 +57,11 @@ do                                                                              
 {                                                                                                   \
   if( ::stf::detail::result stf_local_r = STF_DECOMPOSE(EXPR) )                                     \
   {                                                                                                 \
-    STF_FAIL( "Not expecting: " << ::stf::white_(STF_STRING(EXPR)) );                               \
+    STF_FAIL( "Not expecting: " << STF_STRING(EXPR));                                               \
     if(!$.is_compact()) STF_DUMP( stf_local_r );                                                    \
   }                                                                                                 \
   else                                                                                              \
-    STF_PASS( "Not expecting: " << ::stf::white_(STF_STRING(EXPR)) );                               \
+    STF_PASS( "Not expecting: " << STF_STRING(EXPR));                                               \
 } while( ::stf::is_false() )                                                                        \
 /**/
 

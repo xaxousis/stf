@@ -15,7 +15,6 @@
 #ifndef STF_COMMON_LOCATION_HPP_INCLUDED
 #define STF_COMMON_LOCATION_HPP_INCLUDED
 
-#include <stf/common/color.hpp>
 #include <iostream>
 #include <string>
 
@@ -35,7 +34,7 @@ namespace stf
   /// Insert a location into a stream
   std::ostream& operator<<(std::ostream& os, location const& l)
   {
-    return os << darkgray_(l.file) << ":" << darkgray_(l.line);
+    return os << l.file << ":" << l.line;
   }
 
   /// Constructs a location instance

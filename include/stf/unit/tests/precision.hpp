@@ -40,16 +40,13 @@
 #define STF_ULP_EQUAL(A,B,X)                                                                        \
 do                                                                                                  \
 {                                                                                                   \
-  auto stf_local_r = STF_DECOMPOSE((A) == ::stf::ulp(B,X));                                                   \
-  if( stf_local_r )                                                                                           \
-    STF_PASS ( "Expecting: " << ::stf::white_(STF_STRING(A) " == " STF_STRING(B))                   \
-                                << " within " << ::stf::white_(X) << " ULPs."                       \
-                );                                                                                  \
+  auto stf_local_r = STF_DECOMPOSE((A) == ::stf::ulp(B,X));                                         \
+  if( stf_local_r )                                                                                 \
+    STF_PASS( "Expecting: " << STF_STRING(A) " == " STF_STRING(B) << " within " << X << " ULPs." ); \
   else                                                                                              \
-    STF_FAIL ( "Expecting: " << ::stf::white_(STF_STRING(A) " == " STF_STRING(B))                   \
-                                << " within " << ::stf::white_(X) << " ULPs "                       \
-                                << "but found:\n" << ::stf::white_(stf_local_r.rhs)                           \
-                );                                                                                  \
+    STF_FAIL( "Expecting: " << STF_STRING(A) " == " STF_STRING(B)                                   \
+                             << " within " << X << " ULPs " << "but found:\n" << stf_local_r.rhs    \
+            );                                                                                      \
 } while( ::stf::is_false() )                                                                        \
 /**/
 
@@ -94,14 +91,12 @@ do                                                                              
 {                                                                                                   \
   auto stf_local_r = STF_DECOMPOSE((A) == ::stf::relative(B,X));                                    \
   if( stf_local_r )                                                                                 \
-    STF_PASS ( "Expecting: " << ::stf::white_(STF_STRING(A) " == " STF_STRING(B))                   \
-                                << " within " << ::stf::white_(X) << " %."                          \
-                );                                                                                  \
+    STF_PASS( "Expecting: " << STF_STRING(A) " == " STF_STRING(B) << " within " << X << " %.");     \
   else                                                                                              \
-    STF_FAIL ( "Expecting: " << ::stf::white_(STF_STRING(A) " == " STF_STRING(B))                   \
-                                << " within " << ::stf::white_(X) << " % "                          \
-                                << "but found:\n" << ::stf::white_(stf_local_r.rhs)                 \
-                );                                                                                  \
+    STF_FAIL( "Expecting: " << STF_STRING(A) " == " STF_STRING(B)                                   \
+                            << " within " << X << " % "                                             \
+                            << "but found:\n" << stf_local_r.rhs                                    \
+            );                                                                                      \
 } while( ::stf::is_false() )                                                                        \
 /**/
 

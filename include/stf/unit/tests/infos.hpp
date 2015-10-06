@@ -21,16 +21,15 @@
 
 /*!
   @ingroup group-detail
-  Display an informations message with a given colorization
+  Display an informations message
 
   @param INDICATOR Type of message
-  @param COLOR   Color of the indicator
   @param MESSAGE Values to display
 **/
-#define STF_DISPLAY( INDICATOR, COLOR, MESSAGE )                                                    \
+#define STF_DISPLAY( INDICATOR, MESSAGE )                                                           \
 do                                                                                                  \
 {                                                                                                   \
-  if(!$.is_compact()) $.stream() << COLOR(INDICATOR) << MESSAGE << std::endl;                       \
+  if(!$.is_compact()) $.stream() << INDICATOR << MESSAGE << std::endl;                              \
 } while( ::stf::is_false() )                                                                        \
 /**/
 
@@ -44,7 +43,7 @@ do                                                                              
 
   @param MESSAGE Values to display
 **/
-#define STF_INFO( MESSAGE ) STF_DISPLAY("[INFO] ",stf::green_, MESSAGE)
+#define STF_INFO( MESSAGE ) STF_DISPLAY("[INFO] ", MESSAGE)
 
 /*!
   @ingroup group-unit
@@ -56,7 +55,7 @@ do                                                                              
 
   @param MESSAGE Values to display
 **/
-#define STF_WARNING( MESSAGE ) STF_DISPLAY("[WARNING] ",stf::yellow_, MESSAGE)
+#define STF_WARNING( MESSAGE ) STF_DISPLAY("[WARNING] ", MESSAGE)
 
 /*!
   @ingroup group-unit
@@ -68,7 +67,7 @@ do                                                                              
 
   @param MESSAGE Values to display
 **/
-#define STF_ERROR( MESSAGE ) STF_DISPLAY("[ERROR] ",stf::red_, MESSAGE)
+#define STF_ERROR( MESSAGE ) STF_DISPLAY("[ERROR] ", MESSAGE)
 
 /*!
   @ingroup group-unit
@@ -92,7 +91,7 @@ do                                                                              
   }                                                                                                 \
   else                                                                                              \
   {                                                                                                 \
-    $.stream() << ::stf::green_("+");                                                               \
+    $.stream() << "+";                                                                              \
   }                                                                                                 \
 } while( ::stf::is_false() )                                                                        \
 /**/
@@ -119,7 +118,7 @@ do                                                                              
   }                                                                                                 \
   else                                                                                              \
   {                                                                                                 \
-    $.stream() << ::stf::red_("-");                                                                 \
+    $.stream() << "-";                                                                              \
   }                                                                                                 \
 } while( ::stf::is_false() )                                                                        \
 /**/
