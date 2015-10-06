@@ -66,7 +66,7 @@ namespace stf
       if( u  > diff )
       {
         errors.push_back( {u, to_string(x),to_string(y), idx} );
-        max_diff = std::max(max_diff,u);
+        max_diff = std::max<double>(max_diff,u);
       }
     }
 

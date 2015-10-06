@@ -44,8 +44,7 @@ namespace stf { namespace detail
     #define STF_BINARY_DECOMPOSE(OP,SB,FN)                                                          \
     template<typename R> result operator OP( R const & rhs )                                        \
     {                                                                                               \
-      using stf::detail::FN;                                                                        \
-      return  { FN(lhs, rhs)                                                                        \
+      return  { stf::detail::FN(lhs, rhs)                                                           \
               , stf::to_string( lhs ), stf::split_line(lhs,rhs,SB), stf::to_string(rhs)             \
               };                                                                                    \
     }                                                                                               \

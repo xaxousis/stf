@@ -660,32 +660,57 @@ $.stream()  << "failing because:\n"                                             
             << "is incorrect.\n";                                                                   \
 
 
-namespace stf { namespace detail
+namespace stf
 {
   template<typename LHS, typename RHS>
-  inline bool isequaln(LHS const& l, RHS const& r)
+  inline bool compare_equal(LHS const& l, RHS const& r)
   {
-        return (l == r) || ((l!=l) && (r!=r));
+        return (l == r);
   }
 
   template<typename LHS, typename RHS>
-  inline bool compare_not_equal(LHS const& l, RHS const& r)
+  inline bool compare_less(LHS const& l, RHS const& r)
   {
-    return !isequaln(l,r);
+    return l < r;
   }
 
-  template<typename LHS, typename RHS>
-  inline bool compare_less(LHS const& l, RHS const& r)          { return l < r; }
+  namespace detail
+  {
+    template<typename LHS, typename RHS> inline bool eq(LHS const& l, RHS const& r)
+    {
+      using stf::compare_equal;
+      return compare_equal(l, r);
+    }
 
-  template<typename LHS, typename RHS>
-  inline bool compare_less_equal(LHS const& l, RHS const& r)    { return l <= r; }
+    template<typename LHS, typename RHS> inline bool neq(LHS const& l, RHS const& r)
+    {
+      using stf::compare_equal;
+      return !compare_equal(l, r);
+    }
 
-  template<typename LHS, typename RHS>
-  inline bool compare_greater(LHS const& l, RHS const& r)       { return l > r; }
+    template<typename LHS, typename RHS> inline bool lt(LHS const& l, RHS const& r)
+    {
+      using stf::compare_less;
+      return compare_less(l, r);
+    }
 
-  template<typename LHS, typename RHS>
-  inline bool compare_greater_equal(LHS const& l, RHS const& r) { return l >= r; }
-} }
+    template<typename LHS, typename RHS> inline bool ge(LHS const& l, RHS const& r)
+    {
+      using stf::compare_less;
+      return !compare_less(l, r);
+    }
+
+    template<typename LHS, typename RHS> inline bool gt(LHS const& l, RHS const& r)
+    {
+      return !lt(l, r) || !neq(l, r);
+    }
+
+    template<typename LHS, typename RHS> inline bool le(LHS const& l, RHS const& r)
+    {
+      return lt(l, r) || eq(l, r);
+    }
+  }
+}
 
 
 namespace stf { namespace detail
@@ -711,18 +736,17 @@ namespace stf { namespace detail
     #define STF_BINARY_DECOMPOSE(OP,SB,FN)                                                          \
     template<typename R> result operator OP( R const & rhs )                                        \
     {                                                                                               \
-      using stf::detail::FN;                                                                        \
-      return  { FN(lhs, rhs)                                                                        \
+      return  { stf::detail::FN(lhs, rhs)                                                           \
               , stf::to_string( lhs ), stf::split_line(lhs,rhs,SB), stf::to_string(rhs)             \
               };                                                                                    \
     }                                                                                               \
 
-    STF_BINARY_DECOMPOSE( ==,  "==", isequaln              )
-    STF_BINARY_DECOMPOSE( !=,  "!=", compare_not_equal     )
-    STF_BINARY_DECOMPOSE( < ,  "<" , compare_less          )
-    STF_BINARY_DECOMPOSE( <=,  "<=", compare_less_equal    )
-    STF_BINARY_DECOMPOSE( > ,  ">" , compare_greater       )
-    STF_BINARY_DECOMPOSE( >=,  ">=", compare_greater_equal )
+    STF_BINARY_DECOMPOSE( ==, "==", eq  )
+    STF_BINARY_DECOMPOSE( !=, "!=", neq )
+    STF_BINARY_DECOMPOSE( < , "<" , lt  )
+    STF_BINARY_DECOMPOSE( > , ">" , gt  )
+    STF_BINARY_DECOMPOSE( >=, ">=", ge  )
+    STF_BINARY_DECOMPOSE( <=, "<=", le  )
 
     #undef STF_BINARY_DECOMPOSE
   };
@@ -1007,7 +1031,7 @@ namespace stf
       if( u  > diff )
       {
         errors.push_back( {u, to_string(x),to_string(y), idx} );
-        max_diff = std::max(max_diff,u);
+        max_diff = std::max<double>(max_diff,u);
       }
     }
 
@@ -1043,7 +1067,7 @@ namespace stf
   }
 
     template<typename Measure, typename Reference, typename U>
-  inline bool isequaln(U const& l, approx_<Measure, Reference> const& r)
+  inline bool compare_equal(U const& l, approx_<Measure, Reference> const& r)
   {
     return r.compare(l);
   }
@@ -1311,6 +1335,8 @@ do                                                                              
                 );                                                                                  \
 } while( ::stf::is_false() )                                                                        \
 
+
+#define STF_IEEE_EQUAL(A,B)  STF_ULP_EQUAL(A,B,0.)
 
 #define STF_RELATIVE_EQUAL(A,B,X)                                                                   \
 do                                                                                                  \
