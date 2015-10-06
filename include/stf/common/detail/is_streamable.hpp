@@ -4,7 +4,6 @@
 
   Defines the is_streamable meta-function
 
-  @copyright 2015 LRI UMR 8623 CNRS/Univ Paris Sud XI
   @copyright 2015 Joel Falcou
 
 

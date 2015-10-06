@@ -4,7 +4,6 @@
 
   Defines test macros for logical relations
 
-  @copyright 2015 LRI UMR 8623 CNRS/Univ Paris Sud XI
   @copyright 2015 Joel Falcou
 
 

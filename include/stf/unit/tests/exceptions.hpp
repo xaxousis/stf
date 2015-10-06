@@ -4,7 +4,6 @@
 
   Defines test macros for test on exceptions and assertions trigger
 
-  @copyright 2015 LRI UMR 8623 CNRS/Univ Paris Sud XI
   @copyright 2015 Joel Falcou
 
 

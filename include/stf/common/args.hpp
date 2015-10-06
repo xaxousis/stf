@@ -4,7 +4,6 @@
 
   Defines functions to retrieve options through command line or environment variables
 
-  @copyright 2015 LRI UMR 8623 CNRS/Univ Paris Sud XI
   @copyright 2015 Joel Falcou
 
 
