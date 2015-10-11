@@ -18,6 +18,7 @@
 #include <stf/unit/env.hpp>
 #include <stf/unit/case.hpp>
 #include <stf/unit/test.hpp>
+#include <stf/unit/types.hpp>
 #include <stf/common/driver.hpp>
 
 #if !defined(STF_USE_CUSTOM_DRIVER)
