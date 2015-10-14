@@ -18,7 +18,6 @@
 
 
 
-#include <boost/algorithm/string/predicate.hpp>
 #include <unordered_map>
 #include <sstream>
 #include <cstdlib>
@@ -81,7 +80,7 @@ namespace stf
 
       static bool is_option(std::string const& s)
       {
-        return boost::starts_with(s, "--") && s != "--";
+        return (s.size() > 2) && (s[0] == '-') && (s[1] == '-');
       }
 
             static std::string get_env(std::string const& name)

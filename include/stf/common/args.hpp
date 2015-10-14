@@ -15,7 +15,6 @@
 #ifndef STF_COMMON_ARGS_HPP_INCLUDED
 #define STF_COMMON_ARGS_HPP_INCLUDED
 
-#include <boost/algorithm/string/predicate.hpp>
 #include <unordered_map>
 #include <sstream>
 #include <cstdlib>
@@ -83,7 +82,7 @@ namespace stf
 
       static bool is_option(std::string const& s)
       {
-        return boost::starts_with(s, "--") && s != "--";
+        return (s.size() > 2) && (s[0] == '-') && (s[1] == '-');
       }
 
       // warning-free getenv on MSVC
