@@ -325,13 +325,19 @@ namespace                                                                       
 template<typename T> void STF_FUNCTION( stf::unit::env& $ )                                         \
 
 
+#include <cstddef>
+#include <cstdint>
+
+#include <cstddef>
+#include <cstdint>
+
 #define STF_SIGNED_BASIC_INTEGRAL_TYPES     (std::ptrdiff_t)(std::intptr_t)(std::intmax_t)
 #define STF_UNSIGNED_BASIC_INTEGRAL_TYPES   (std::size_t)(std::uintptr_t)(std::uintmax_t)
 #define STF_BASIC_TYPES                     STF_SIGNED_BASIC_INTEGRAL_TYPES STF_UNSIGNED_BASIC_INTEGRAL_TYPES
 
 #define STF_SIGNED_FIXED_INTEGRAL_TYPES    (std::int8_t)(std::int16_t)(std::int32_t)(std::int64_t)
 #define STF_UNSIGNED_FIXED_INTEGRAL_TYPES  (std::uint8_t)(std::uint16_t)(std::uint32_t)(std::uint64_t)
-#define STF_FIXED_INTEGRAL_TYPES            STF_SIGNED_FIXED_INTEGRAL_TYPES STF_UNSIGNED_FIXED_INTEGRAL_TYPES
+#define STF_FIXED_INTEGRAL_TYPES           STF_SIGNED_FIXED_INTEGRAL_TYPES STF_UNSIGNED_FIXED_INTEGRAL_TYPES
 
 #define STF_SIGNED_STD_INTEGRAL_TYPES    STF_SIGNED_BASIC_INTEGRAL_TYPES STF_SIGNED_FIXED_INTEGRAL_TYPES
 #define STF_UNSIGNED_STD_INTEGRAL_TYPES  STF_UNSIGNED_BASIC_INTEGRAL_TYPES STF_UNSIGNED_FIXED_INTEGRAL_TYPES
@@ -352,8 +358,6 @@ template<typename T> void STF_FUNCTION( stf::unit::env& $ )                     
 #define STF_NUMERIC_TYPES           STF_SIGNED_NUMERIC_TYPES STF_UNSIGNED_NUMERIC_TYPES
 
 #define STF_ALL_TYPES     (bool) STF_NUMERIC_TYPES
-
-
 
 namespace stf
 {
