@@ -22,6 +22,7 @@
 #include <sstream>
 #include <cstdlib>
 #include <string>
+#include <boost/config.hpp>
 
 namespace stf
 {
@@ -328,36 +329,19 @@ template<typename T> void STF_FUNCTION( stf::unit::env& $ )                     
 #include <cstddef>
 #include <cstdint>
 
-#include <cstddef>
-#include <cstdint>
-
-#define STF_SIGNED_BASIC_INTEGRAL_TYPES     (std::ptrdiff_t)(std::intptr_t)(std::intmax_t)
-#define STF_UNSIGNED_BASIC_INTEGRAL_TYPES   (std::size_t)(std::uintptr_t)(std::uintmax_t)
-#define STF_BASIC_TYPES                     STF_SIGNED_BASIC_INTEGRAL_TYPES STF_UNSIGNED_BASIC_INTEGRAL_TYPES
-
-#define STF_SIGNED_FIXED_INTEGRAL_TYPES    (std::int8_t)(std::int16_t)(std::int32_t)(std::int64_t)
-#define STF_UNSIGNED_FIXED_INTEGRAL_TYPES  (std::uint8_t)(std::uint16_t)(std::uint32_t)(std::uint64_t)
-#define STF_FIXED_INTEGRAL_TYPES           STF_SIGNED_FIXED_INTEGRAL_TYPES STF_UNSIGNED_FIXED_INTEGRAL_TYPES
-
-#define STF_SIGNED_STD_INTEGRAL_TYPES    STF_SIGNED_BASIC_INTEGRAL_TYPES STF_SIGNED_FIXED_INTEGRAL_TYPES
-#define STF_UNSIGNED_STD_INTEGRAL_TYPES  STF_UNSIGNED_BASIC_INTEGRAL_TYPES STF_UNSIGNED_FIXED_INTEGRAL_TYPES
-#define STF_STD_INTEGRAL_TYPES           STF_SIGNED_STD_INTEGRAL_TYPES STF_UNSIGNED_STD_INTEGRAL_TYPES
-
-#define STF_SIGNED_INTEGRAL_TYPES   (signed char)(signed short)(signed int)(signed long)
-#define STF_UNSIGNED_INTEGRAL_TYPES (unsigned char)(unsigned short)(unsigned int)(unsigned long)
-#define STF_INTEGRAL_TYPES          (char) STF_SIGNED_INTEGRAL_TYPES STF_UNSIGNED_INTEGRAL_TYPES
-
-#define STF_SIGNED_ALL_INTEGRAL_TYPES   STF_SIGNED_STD_INTEGRAL_TYPES STF_SIGNED_INTEGRAL_TYPES
-#define STF_UNSIGNED_ALL_INTEGRAL_TYPES STF_UNSIGNED_STD_INTEGRAL_TYPES STF_UNSIGNED_INTEGRAL_TYPES
-#define STF_ALL_INTEGRAL_TYPES          STF_SIGNED_ALL_INTEGRAL_TYPES STF_UNSIGNED_ALL_INTEGRAL_TYPES
+#define STF_SIGNED_INTEGRAL_TYPES     (std::int8_t)(std::int16_t)(std::int32_t)(std::int64_t)
+#define STF_UNSIGNED_INTEGRAL_TYPES   (std::uint8_t)(std::uint16_t)(std::uint32_t)(std::uint64_t)
+#define STF_INTEGRAL_TYPES            STF_SIGNED_INTEGRAL_TYPES STF_UNSIGNED_INTEGRAL_TYPES
 
 #define STF_IEEE_TYPES (float)(double)
 
-#define STF_SIGNED_NUMERIC_TYPES    STF_SIGNED_ALL_INTEGRAL_TYPES STF_IEEE_TYPES
-#define STF_UNSIGNED_NUMERIC_TYPES  STF_UNSIGNED_ALL_INTEGRAL_TYPES
+#define STF_SIGNED_NUMERIC_TYPES    STF_SIGNED_INTEGRAL_TYPES STF_IEEE_TYPES
+#define STF_UNSIGNED_NUMERIC_TYPES  STF_UNSIGNED_INTEGRAL_TYPES
 #define STF_NUMERIC_TYPES           STF_SIGNED_NUMERIC_TYPES STF_UNSIGNED_NUMERIC_TYPES
 
 #define STF_ALL_TYPES     (bool) STF_NUMERIC_TYPES
+
+
 
 namespace stf
 {
@@ -619,7 +603,7 @@ namespace stf { namespace detail
 #define STF_DUMP(R)                                                                                 \
 $.stream()  << "failing because:\n" << R.lhs << R.op << R.rhs << "\n" << "is incorrect.\n";         \
 
-
+  
 namespace stf
 {
   template<typename LHS, typename RHS>
@@ -700,7 +684,7 @@ namespace stf { namespace detail
               , stf::to_string( lhs ), stf::split_line(lhs,rhs,SB), stf::to_string(rhs)             \
               };                                                                                    \
     }                                                                                               \
-
+    
     STF_BINARY_DECOMPOSE( ==, "==", eq  )
     STF_BINARY_DECOMPOSE( !=, "!=", neq )
     STF_BINARY_DECOMPOSE( < , "<" , lt  )
