@@ -19,6 +19,7 @@
 #include <sstream>
 #include <cstdlib>
 #include <string>
+#include <boost/config.hpp>
 
 namespace stf
 {
