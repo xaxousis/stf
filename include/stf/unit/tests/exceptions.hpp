@@ -95,16 +95,16 @@ do                                                                              
 #define STF_ASSERT(X)                                                                               \
 do                                                                                                  \
 {                                                                                                   \
-  bool caught = false;                                                                              \
-  try  { STF_UNUSED(BOOST_PP_REMOVE_PARENS(X)); }                                                   \
-  catch( ::stf::detail::assertion_failure& e)                                                       \
+  STF_UNUSED(BOOST_PP_REMOVE_PARENS(X));                                                            \
+  if(stf::detail::current_assertion())                                                              \
   {                                                                                                 \
-    caught = true;                                                                                  \
-    STF_PASS( STF_STRING(X) << " triggered: \n" << e << "\n" );                                     \
+    STF_PASS( STF_STRING(X) << " triggered: \n" << *stf::detail::current_assertion() << "\n" );     \
   }                                                                                                 \
-                                                                                                    \
-  if(!caught)                                                                                       \
+  else                                                                                              \
+  {                                                                                                 \
     STF_FAIL( STF_STRING(X) << " didn't trigger any assertion." );                                  \
+  }                                                                                                 \
+  stf::detail::current_assertion().reset();                                                         \
 } while( ::stf::is_false() )                                                                        \
 /**/
 
@@ -126,16 +126,16 @@ do                                                                              
 #define STF_NO_ASSERT(X)                                                                            \
 do                                                                                                  \
 {                                                                                                   \
-  bool caught = false;                                                                              \
-  try  { STF_UNUSED(BOOST_PP_REMOVE_PARENS(X)); }                                                   \
-  catch( ::stf::detail::assertion_failure& e)                                                       \
+  STF_UNUSED(BOOST_PP_REMOVE_PARENS(X));                                                            \
+  if(stf::detail::current_assertion())                                                              \
   {                                                                                                 \
-    caught = true;                                                                                  \
-    STF_FAIL( STF_STRING(X) << " triggered: \n" << e << "\n" );                                     \
+    STF_FAIL( STF_STRING(X) << " triggered: \n" << *stf::detail::current_assertion() << "\n" );     \
   }                                                                                                 \
-                                                                                                    \
-  if(!caught)                                                                                       \
+  else                                                                                              \
+  {                                                                                                 \
     STF_PASS( STF_STRING(X) << " didn't trigger any assertion." );                                  \
+  }                                                                                                 \
+  stf::detail::current_assertion().reset();                                                         \
 } while( ::stf::is_false() )                                                                        \
 /**/
 

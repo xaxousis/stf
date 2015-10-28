@@ -9,15 +9,16 @@
 //==================================================================================================
 #include <stf/unit/unit.hpp>
 #include <stf/unit/tests/exceptions.hpp>
+#include <boost/config.hpp>
 
 //! [assert_foo]
-void foo(int x)
+void foo(int x) BOOST_NOEXCEPT
 {
   BOOST_ASSERT_MSG( x != 0, "x must be non-null" );
 }
 //! [assert_foo]
 
-void bar(int x)
+void bar(int x) BOOST_NOEXCEPT
 {
   BOOST_ASSERT( x != 0 );
 }
