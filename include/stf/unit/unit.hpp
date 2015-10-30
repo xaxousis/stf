@@ -21,8 +21,6 @@
 #include <stf/unit/types.hpp>
 #include <stf/common/driver.hpp>
 
-#if !defined(STF_USE_CUSTOM_DRIVER)
 #include <stf/unit/main.hpp>
-#endif
 
 #endif

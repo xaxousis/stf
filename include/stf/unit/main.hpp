@@ -31,10 +31,12 @@
 #define STF_CUSTOM_DRIVER_FUNCTION
 #endif
 
+#if !defined(STF_USE_CUSTOM_DRIVER)
 int STF_CUSTOM_DRIVER_FUNCTION(int argc, const char** argv)
 {
   ::stf::unit::env $env(argc,argv,std::cout);
   return ::stf::run( $env, ::stf::unit::suite(), 0, 0 );
 }
+#endif
 
 #endif
