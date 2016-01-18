@@ -17,7 +17,6 @@
 
 #include <stf/common/warning.hpp>
 #include <stf/unit/tests/basic.hpp>
-#include <stf/unit/detail/assertion_failure.hpp>
 #include <boost/preprocessor/punctuation/remove_parens.hpp>
 
 /*!
