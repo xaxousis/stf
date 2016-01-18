@@ -29,14 +29,11 @@ STF_CASE( "Check that forced broken expectation fails" )
 }
 
 void foo(bool x)  { if(x) throw 0; }
-void bar(int x )  { BOOST_ASSERT_MSG( x != 0, "x must be non-null" ); }
 
 STF_CASE( "Check that forced broken exceptions tests fails" )
 {
   STF_THROW(foo(false),int);
   STF_NO_THROW(foo(true));
-  STF_ASSERT(bar(1));
-  STF_NO_ASSERT(bar(0));
 }
 
 STF_CASE( "Check that forced broken precision tests fails" )
@@ -67,5 +64,5 @@ STF_CASE( "Check that forced broken types tests fails" )
 int main(int argc, const char** argv)
 {
   ::stf::unit::env $env(argc,argv,std::cout);
-  return ::stf::run( $env, ::stf::unit::suite(), 18, 0 );
+  return ::stf::run( $env, ::stf::unit::suite(), 16, 0 );
 }
