@@ -69,8 +69,5 @@ after_test:
 # to run your custom scripts instead of automatic tests
 test_script:
  - cd c:\sources\stf\build
- - cmd: ctest -C Debug -VV
- - cmd: ctest -C Release -VV
-
-
-
+ - cmd: ctest -C Debug
+ - cmd: ctest -C Release
