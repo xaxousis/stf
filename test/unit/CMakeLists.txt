@@ -5,7 +5,6 @@
 ##                        See accompanying file LICENSE.txt or copy at
 ##                            http://www.boost.org/LICENSE_1_0.txt
 ##===================================================================================================
-
 include(make_unit)
 include(make_coverage)
 
@@ -20,15 +19,6 @@ set ( SOURCES
       suite.cpp
       types.cpp
       ulp.cpp
-    )
-
-make_unit( "stf.unit" ${SOURCES})
-make_coverage("stf.unit" ${SOURCES})
-
-add_definitions(-DBOOST_ENABLE_ASSERT_HANDLER)
-
-set ( SOURCES
-      assert.cpp
     )
 
 make_unit( "stf.unit" ${SOURCES})
