@@ -94,7 +94,7 @@ namespace stf
     if( (a0 == a1) || ((a0!=a0) && (a1!=a1)) )  return 0.;
     if( (a0!=a0) || (a1!=a1) )                  return std::numeric_limits<T>::infinity();
 
-    int e1,e2;
+    int e1 = 0,e2 = 0;
     T   m1,m2;
     m1 = std::frexp(a0, &e1);
     m2 = std::frexp(a1, &e2);
