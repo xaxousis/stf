@@ -20,11 +20,11 @@ function(make_unit root)
 
     add_executable(${test} ${file})
     set_property( TARGET ${test}
-                  PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/test"
+                  PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
                 )
 
     add_test( NAME ${test}
-              WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/test"
+              WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
               COMMAND $<TARGET_FILE:${test}>
             )
 
