@@ -29,7 +29,7 @@
 #define STF_DISPLAY( INDICATOR, MESSAGE )                                                           \
 do                                                                                                  \
 {                                                                                                   \
-  if(!$.is_compact()) $.stream() << INDICATOR << MESSAGE << std::endl;                              \
+  $.stream() << INDICATOR << MESSAGE << std::endl;                                                  \
 } while( ::stf::is_false() )                                                                        \
 /**/
 
@@ -89,10 +89,6 @@ do                                                                              
   {                                                                                                 \
     $.pass() << MESSAGE << " in: " << ::stf::at(__FILE__,__LINE__) << std::endl;                    \
   }                                                                                                 \
-  else                                                                                              \
-  {                                                                                                 \
-    $.stream() << "+";                                                                              \
-  }                                                                                                 \
 } while( ::stf::is_false() )                                                                        \
 /**/
 
@@ -112,14 +108,7 @@ do                                                                              
 do                                                                                                  \
 {                                                                                                   \
   $.as_failure();                                                                                   \
-  if(!$.is_compact())                                                                               \
-  {                                                                                                 \
-    $.fail() << MESSAGE << " in: " << ::stf::at(__FILE__,__LINE__) << std::endl;                    \
-  }                                                                                                 \
-  else                                                                                              \
-  {                                                                                                 \
-    $.stream() << "-";                                                                              \
-  }                                                                                                 \
+  $.fail() << MESSAGE << " in: " << ::stf::at(__FILE__,__LINE__) << std::endl;                      \
 } while( ::stf::is_false() )                                                                        \
 /**/
 
