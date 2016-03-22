@@ -331,7 +331,7 @@ template<typename T> void STF_FUNCTION( stf::unit::env& $ )                     
 
 #define STF_SIGNED_INTEGRAL_TYPES     (std::int8_t)(std::int16_t)(std::int32_t)(std::int64_t)
 #define STF_UNSIGNED_INTEGRAL_TYPES   (std::uint8_t)(std::uint16_t)(std::uint32_t)(std::uint64_t)
-#define STF_INTEGRAL_TYPES            STF_SIGNED_INTEGRAL_TYPES STF_UNSIGNED_INTEGRAL_TYPES
+#define STF_INTEGRAL_TYPES            (char)STF_SIGNED_INTEGRAL_TYPES STF_UNSIGNED_INTEGRAL_TYPES
 
 #define STF_IEEE_TYPES (float)(double)
 
