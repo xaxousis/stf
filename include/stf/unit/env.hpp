@@ -87,10 +87,10 @@ namespace stf
       /// Insert a "[IVLD]" message into the stream
       std::ostream& invalid() const
       {
-        if(!compact_mode)
-          return os << "[IVLD]" << " - ";
+        if(compact_mode)
+          return os << "I";
         else
-          return os;
+          return os << "[IVLD]" << " - ";
       }
 
       // Can't be generated due ton reference to ostream member
@@ -152,7 +152,7 @@ namespace stf
     }
     else
     {
-      env.stream() << "Scenario: " << t.name << std::endl;
+      env.stream()  << "Scenario: " << t.name << " : ";
     }
   }
 
@@ -169,7 +169,10 @@ namespace stf
     if(count == env.tests())
     {
       env.as_invalid();
-      env.invalid() << "Empty test case" << std::endl;
+      if(!env.is_compact())
+        env.invalid() << "Empty test case" << std::endl;
+      else
+        env.stream() << "!";
     }
   }
 }

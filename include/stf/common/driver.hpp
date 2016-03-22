@@ -45,8 +45,8 @@ namespace stf
   template<typename Environment, typename Suite, typename... Setup>
   inline bool run(Environment& environment, Suite& tests, Setup const&... setup)
   {
-    // retrieve display status - compact is now the default
-    auto is_compact = !args("verbose",false);
+    // retrieve compact status
+    auto is_compact = args("compact",false);
     environment.compact(is_compact);
 
     // randomize test on non-null random seed option
@@ -64,7 +64,7 @@ namespace stf
 
       process_invalid(environment, count);
 
-      if(!is_compact) environment.stream() << std::endl;
+      environment.stream() << std::endl;
     }
 
     return ::stf::report(environment,setup...);
