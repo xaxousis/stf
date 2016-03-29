@@ -26,10 +26,9 @@ namespace stf
     struct relative_measure
     {
       template<typename T, typename U>
-      auto operator()(T const& data, U const& ref) const -> decltype(reldist(data,ref))
+      double operator()(T const& data, U const& ref) const
       {
-        using ::stf::reldist;
-        return reldist(data,ref);
+        return ::stf::reldist(data,ref);
       }
 
       template<typename Stream> static void to_stream(Stream& s, double v)

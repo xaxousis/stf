@@ -4,7 +4,7 @@
 
   Defines the basic ulpdist function
 
-  @copyright 2015 Joel Falcou
+  @copyright 2016 Joel Falcou
 
 
   Distributed under the Boost Software License, Version 1.0.
@@ -15,15 +15,86 @@
 #ifndef STF_UNIT_DETAIL_ULPDIST_HPP_INCLUDED
 #define STF_UNIT_DETAIL_ULPDIST_HPP_INCLUDED
 
-#include <stf/common/detail/is_container.hpp>
 #include <stf/unit/detail/traits.hpp>
+#include <type_traits>
 #include <algorithm>
 #include <iterator>
 #include <cmath>
 
 namespace stf
 {
-#if defined(DOXYGEN_ONLY)
+  namespace ext
+  {
+    /*!
+      @ingroup group-details
+
+      @brief User extension point for ULP computation
+    **/
+    template< typename T1, typename T2 = T1
+            , typename EnableIF = void
+            >
+    struct ulpdist
+    {
+      inline double operator()(T1 a, T2 b) const
+      {
+        using common_t = detail::common_t<T1,T2>;
+        return ext::ulpdist<common_t>() ( static_cast<common_t>(a)
+                                        , static_cast<common_t>(b)
+                                        );
+      }
+    };
+
+    // Overload for booleans
+    template< typename T>
+    struct ulpdist<T,T,typename std::enable_if<std::is_same<T,bool>::value>::type>
+    {
+      inline double operator()(T a, T b) const
+      {
+        return a == b ? 0. : 1.;
+      }
+    };
+
+    // Overload for reals
+    template<typename T>
+    struct ulpdist< T, T
+                  , typename std::enable_if<std::is_floating_point<T>::value>::type
+                  >
+    {
+      inline double operator()(T a, T b) const
+      {
+        if( (a==b) || ((a!=a) && (b!=b)) )  return 0.;
+        if( (a!=a) || (b!=b) )              return std::numeric_limits<T>::infinity();
+
+        int e1 = 0,e2 = 0;
+        T   m1,m2;
+        m1 = std::frexp(a, &e1);
+        m2 = std::frexp(b, &e2);
+
+        int expo = -std::max(e1, e2);
+
+        T e = (e1 == e2)  ? std::abs(m1-m2)
+                          : std::abs(std::ldexp(a, expo)- std::ldexp(b, expo));
+
+        return double(e/std::numeric_limits<T>::epsilon());
+      }
+    };
+
+    // Overload for integers
+    template<typename T>
+    struct ulpdist< T, T
+                  , typename std::enable_if <   std::is_integral<T>::value
+                                            &&  !std::is_same<T,bool>::value
+                                            >::type
+                  >
+    {
+      inline double operator()(T a, T b) const
+      {
+        using u_t = typename std::make_unsigned<T>::type;
+        return static_cast<double>( (a<b) ? u_t(b-a) : u_t(a-b) );
+      }
+    };
+  }
+
   /*!
     @ingroup group-details
 
@@ -67,46 +138,23 @@ namespace stf
     - if @c T is a floating-point type, @c r is equal to the number of different bits between the
       normalized representation of @c a0 and @c a1 as defined by Golderg et al.
 
-    - if @c T is a Container, @c r is a container containing the ULP distance between each pair of
-    elements in @c a0 and @c a1
+    @par Customization
+
+    Behavior of ulpdist on user defined types can be done by overloading the SFINAE-aware
+    ext::ulpdist class.
 
     @param a0 First value to compare
     @param a1 Second value to compare
     @return The distance in ULP between a0 and a1
   **/
-  template<typename T, typename U> inline auto ulpdist(T a0, U a1);
-#else
-
-#endif
-
-  inline double ulpdist(bool a0, bool a1) { return a0 == a1 ? 0. : 1.; }
-
-  template<typename T>
-  inline detail::if_integral<T,double> ulpdist(T const& a0, T const& a1)
+  template<typename T, typename U> inline double ulpdist(T a0, U a1)
   {
-    using u_t = typename std::make_unsigned<T>::type;
-    return static_cast<double>( (a0<a1) ? u_t(a1-a0) : u_t(a0-a1) );
+    return ext::ulpdist<T,U>()(a0,a1);
   }
 
-  template<typename T>
-  inline detail::if_real<T,double> ulpdist(T const& a0, T const& a1)
-  {
-    if( (a0 == a1) || ((a0!=a0) && (a1!=a1)) )  return 0.;
-    if( (a0!=a0) || (a1!=a1) )                  return std::numeric_limits<T>::infinity();
+#if 0
 
-    int e1 = 0,e2 = 0;
-    T   m1,m2;
-    m1 = std::frexp(a0, &e1);
-    m2 = std::frexp(a1, &e2);
-
-    int expo = -std::max(e1, e2);
-
-    T e = (e1 == e2)  ? std::abs(m1-m2)
-                      : std::abs(std::ldexp(a0, expo)- std::ldexp(a1, expo));
-
-    return double(e/std::numeric_limits<T>::epsilon());
-  }
-
+/*
   template<typename T>
   inline detail::if_container<T,std::vector<double>> ulpdist(T const& a0, T const& a1)
   {
@@ -150,12 +198,8 @@ namespace stf
 
     return ulps;
   }
-
-  template<typename T, typename U>
-  inline detail::are_not_containers<T,U,double> ulpdist(T const& a0, U const& a1)
-  {
-    return ulpdist(static_cast<detail::common_t<T,U>>(a0), static_cast<detail::common_t<T,U>>(a1));
-  }
+*/
+#endif
 }
 
 #endif

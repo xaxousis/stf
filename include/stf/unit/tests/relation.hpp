@@ -21,8 +21,7 @@
   @ingroup group-unit
   Test for value equality.
 
-  This macro performs an equality test between its arguments using either the natural @c == operator
-  or an ADL-accessible function named @c isequaln , whichever occurs first.
+  This macro performs an equality test between its arguments using the @c == operator.
 
   @par Usage:
 

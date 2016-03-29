@@ -26,10 +26,9 @@ namespace stf
     struct ulp_measure
     {
       template<typename T, typename U>
-      auto operator()(T const& data, U const& ref) const -> decltype(ulpdist(data,ref))
+      double operator()(T const& data, U const& ref) const
       {
-        using stf::ulpdist;
-        return ulpdist(data,ref);
+        return stf::ulpdist(data,ref);
       }
 
       template<typename Stream> static void to_stream(Stream& s, double v)

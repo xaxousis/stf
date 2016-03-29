@@ -9,6 +9,8 @@ include(make_unit)
 include(make_coverage)
 
 set ( SOURCES
+      all_relative.cpp
+      all_ulp.cpp
       expect.cpp
       exceptions.cpp
       failure.cpp
@@ -16,7 +18,6 @@ set ( SOURCES
       pass.cpp
       relation.cpp
       relative.cpp
-      suite.cpp
       types.cpp
       ulp.cpp
     )
