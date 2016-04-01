@@ -151,55 +151,6 @@ namespace stf
   {
     return ext::ulpdist<T,U>()(a0,a1);
   }
-
-#if 0
-
-/*
-  template<typename T>
-  inline detail::if_container<T,std::vector<double>> ulpdist(T const& a0, T const& a1)
-  {
-    using type = decltype(*a0.begin());
-    std::vector<double> ulps;
-
-    std::transform( a0.begin(), a0.end(), a1.begin()
-                  , std::back_inserter(ulps)
-                  , [](type const& a,type const& b) { using ::stf::ulpdist; return ulpdist(a,b); }
-                  );
-
-    return ulps;
-  }
-
-  template<typename T, typename U>
-  inline detail::if_container<T,std::vector<double>>
-  ulpdist(T const& a0, U const& a1)
-  {
-    using type = decltype(*a0.begin());
-    std::vector<double> ulps;
-
-    std::transform( a0.begin(), a0.end()
-                  , std::back_inserter(ulps)
-                  , [&a1](type const& a) { using ::stf::ulpdist; return ulpdist(a,a1); }
-                  );
-
-    return ulps;
-  }
-
-  template<typename T, typename U>
-  inline detail::if_container<T,std::vector<double>>
-  ulpdist(U const& a1,T const& a0)
-  {
-    using type = decltype(*a0.begin());
-    std::vector<double> ulps;
-
-    std::transform( a0.begin(), a0.end()
-                  , std::back_inserter(ulps)
-                  , [&a1](type const& a) { using ::stf::ulpdist; return ulpdist(a1,a); }
-                  );
-
-    return ulps;
-  }
-*/
-#endif
 }
 
 #endif
