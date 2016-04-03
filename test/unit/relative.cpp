@@ -1,6 +1,6 @@
 //==================================================================================================
 /*
-  Copyright 2015 Joel Falcou
+  Copyright 2016 Joel Falcou
 
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
@@ -61,33 +61,30 @@ STF_CASE_TPL( "Relative distance between floating point", (float)(double))
 }
 
 //! [relative]
-STF_CASE("Relative distance between containers")
-{
-  std::vector<float> a{1.f,1.1f,0.9f,1.3f};
-  std::vector<float> b{1.f,1.f,1.f,1.f};
-  std::vector<float> s{1.1f};
-
-  STF_RELATIVE_EQUAL(a  , b   , 25);
-  STF_RELATIVE_EQUAL(s  , 1.f , 25);
-  STF_RELATIVE_EQUAL(1.f, s   , 25);
-}
-//! [relative]
-
 STF_CASE("Relative distance between different types")
 {
   STF_RELATIVE_EQUAL('A'  , 80ULL , 18.75);
   STF_RELATIVE_EQUAL(true , 1LL   , 0.);
+  STF_RELATIVE_EQUAL(1. , 2.f     , 100.);
 }
+//! [relative]
 
 namespace n1
 {
   struct my_real { float x; };
-
-  double reldist(my_real const& a, my_real const& b)
-  {
-    return a.x/b.x;
-  }
 }
+
+namespace stf { namespace ext
+{
+  template<typename EnableIf>
+  struct reldist<::n1::my_real,::n1::my_real,EnableIf>
+  {
+    inline double operator()(::n1::my_real const& a, ::n1::my_real const& b) const
+    {
+      return a.x/b.x;
+    }
+  };
+} }
 
 STF_CASE("Relative distance of type with custom reldist")
 {

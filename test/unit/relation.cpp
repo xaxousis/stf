@@ -15,17 +15,28 @@
 namespace foo
 {
   struct bar { float v; };
-
-  bool compare_equal(bar const& a, bar const& b)
-  {
-    return stf::compare_equal(a.v,b.v);
-  }
-
-  bool compare_less(bar const& a, bar const& b)
-  {
-    return stf::compare_less(a.v,b.v);
-  }
 }
+
+namespace stf { namespace ext
+{
+  template<typename EnableIf>
+  struct equal<::foo::bar,::foo::bar,EnableIf>
+  {
+    inline bool operator()(::foo::bar const& l, ::foo::bar const& r) const
+    {
+      return l.v == r.v;
+    }
+  };
+
+  template<typename EnableIf>
+  struct less<::foo::bar,::foo::bar,EnableIf>
+  {
+    inline bool operator()(::foo::bar const& l, ::foo::bar const& r) const
+    {
+      return l.v < r.v;
+    }
+  };
+} }
 //! [bar]
 
 //! [equal]

@@ -38,7 +38,7 @@ STF_CASE( "Check that forced broken exceptions tests fails" )
 
 STF_CASE( "Check that forced broken precision tests fails" )
 {
-  STF_RELATIVE_EQUAL(1,2,0.5);
+  STF_RELATIVE_EQUAL(1,2,0);
   STF_ULP_EQUAL(1., 2., 0.5 );
 }
 

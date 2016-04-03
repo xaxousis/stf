@@ -18,43 +18,47 @@
 
 namespace stf
 {
-  template<typename LHS, typename RHS>
-  inline bool compare_equal(LHS const& l, RHS const& r)
+  namespace ext
   {
-    // equality or both are NaNs
-    return (l == r);
-  }
+    template<typename LHS, typename RHS, typename EnableIf = void>
+    struct equal
+    {
+      inline bool operator()(LHS const& l, RHS const& r) const
+      {
+        return l == r;
+      }
+    };
 
-  template<typename LHS, typename RHS>
-  inline bool compare_less(LHS const& l, RHS const& r)
-  {
-    return l < r;
+    template<typename LHS, typename RHS, typename EnableIf = void>
+    struct less
+    {
+      inline bool operator()(LHS const& l, RHS const& r) const
+      {
+        return l < r;
+      }
+    };
   }
 
   namespace detail
   {
     template<typename LHS, typename RHS> inline bool eq(LHS const& l, RHS const& r)
     {
-      using stf::compare_equal;
-      return compare_equal(l, r);
+      return ::stf::ext::equal<LHS,RHS>()(l, r);
     }
 
     template<typename LHS, typename RHS> inline bool neq(LHS const& l, RHS const& r)
     {
-      using stf::compare_equal;
-      return !compare_equal(l, r);
+      return !eq(l, r);
     }
 
     template<typename LHS, typename RHS> inline bool lt(LHS const& l, RHS const& r)
     {
-      using stf::compare_less;
-      return compare_less(l, r);
+      return ::stf::ext::less<LHS,RHS>()(l, r);
     }
 
     template<typename LHS, typename RHS> inline bool ge(LHS const& l, RHS const& r)
     {
-      using stf::compare_less;
-      return !compare_less(l, r);
+      return !lt(l, r);
     }
 
     template<typename LHS, typename RHS> inline bool gt(LHS const& l, RHS const& r)

@@ -16,6 +16,7 @@
 #define STF_UNIT_DETAIL_APPROX_HPP_INCLUDED
 
 #include <stf/common/detail/is_container.hpp>
+#include <stf/unit/detail/comparator.hpp>
 #include <stf/common/to_string.hpp>
 #include <vector>
 #include <string>
@@ -33,10 +34,16 @@ namespace stf
       size_mismatch = detail::size(ref) != detail::size(data);
       if(size_mismatch) return false;
 
-      auto dist = m(data,ref);
-
       auto br = detail::begin(data);
+      auto er = detail::end(data);
       auto bi = detail::begin(ref);
+
+      std::vector<double> dist;
+      while(br != er)
+        dist.push_back( m(*br++,*bi++) );
+
+      bi = detail::begin(ref);
+      br = detail::begin(data);
       auto bd = detail::begin(dist);
       auto sz = detail::size(data);
 
@@ -105,11 +112,16 @@ namespace stf
     return os << "{\n"  + ls.str() + "}\n with a maximal error of " + s.str();
   }
 
-  // ADL compare_equal for approx_
-  template<typename Measure, typename Reference, typename U>
-  inline bool compare_equal(U const& l, approx_<Measure, Reference> const& r)
+  namespace ext
   {
-    return r.compare(l);
+    template<typename T, typename Measure, typename Reference, typename EnableIf>
+    struct equal<T,stf::approx_<Measure, Reference>,EnableIf>
+    {
+      inline bool operator()(T const& l, stf::approx_<Measure, Reference> const& r) const
+      {
+        return r.compare(l);
+      }
+    };
   }
 }
 
