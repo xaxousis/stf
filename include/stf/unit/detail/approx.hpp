@@ -114,8 +114,8 @@ namespace stf
 
   namespace ext
   {
-    template<typename T, typename Measure, typename Reference, typename EnableIf>
-    struct equal<T,stf::approx_<Measure, Reference>,EnableIf>
+    template<typename T, typename Measure, typename Reference>
+    struct equal<T,stf::approx_<Measure, Reference>>
     {
       inline bool operator()(T const& l, stf::approx_<Measure, Reference> const& r) const
       {

@@ -40,11 +40,13 @@
 do                                                                                                  \
 {                                                                                                   \
   auto stf_local_r = ::stf::ulpdist((A),(B));                                                       \
+  auto stf_local_d = STF_DECOMPOSE((A) == (B));                                                     \
   if( stf_local_r <= (X) )                                                                          \
     STF_PASS( "Expecting: " << STF_STRING(A) " == " STF_STRING(B) << " within " << X << " ULPs." ); \
   else                                                                                              \
-    STF_FAIL( "Expecting: " << STF_STRING(A) " == " STF_STRING(B)                                   \
-                             << " within " << X << " ULPs " << "but found:\n" << stf_local_r        \
+    STF_FAIL( "Expecting: " << stf_local_d.lhs << " == " << stf_local_d.rhs                         \
+                            << " within " << X << " ULPs " << "but found: " << stf_local_r          \
+                            << " ULPs instead."                                                     \
             );                                                                                      \
 } while( ::stf::is_false() )                                                                        \
 /**/
@@ -91,7 +93,8 @@ do                                                                              
     STF_PASS( "Expecting: " << STF_STRING(A) " == " STF_STRING(B) << " within " << X << " ULPs." ); \
   else                                                                                              \
     STF_FAIL( "Expecting: " << STF_STRING(A) " == " STF_STRING(B)                                   \
-                             << " within " << X << " ULPs " << "but found:\n" << stf_local_r.rhs    \
+                            << " within " << X << " ULPs " << "but found: " << stf_local_r.rhs      \
+                            << " ULPs instead."                                                     \
             );                                                                                      \
 } while( ::stf::is_false() )                                                                        \
 /**/
@@ -133,12 +136,14 @@ do                                                                              
 do                                                                                                  \
 {                                                                                                   \
   auto stf_local_r = ::stf::reldist((A),(B));                                                       \
+  auto stf_local_d = STF_DECOMPOSE((A) == (B));                                                     \
   if( stf_local_r <= (X/100.))                                                                      \
-    STF_PASS( "Expecting: " << STF_STRING(A) " == " STF_STRING(B) << " within " << X << " %.");     \
+    STF_PASS( "Expecting: " << STF_STRING(A) " == " STF_STRING(B) << " ~ " << X << " %.");\
   else                                                                                              \
-    STF_FAIL( "Expecting: " << STF_STRING(A) " == " STF_STRING(B)                                   \
+    STF_FAIL( "Expecting: " << stf_local_d.lhs << " == " << stf_local_d.rhs                         \
                             << " within " << X << " % "                                             \
-                            << "but found:\n" << stf_local_r                                        \
+                            << "but found: " << 100*stf_local_r                                     \
+                            << " % instead."                                                        \
             );                                                                                      \
 } while( ::stf::is_false() )                                                                        \
 /**/
@@ -169,9 +174,27 @@ do                                                                              
   else                                                                                              \
     STF_FAIL( "Expecting: " << STF_STRING(A) " == " STF_STRING(B)                                   \
                             << " within " << X << " % "                                             \
-                            << "but found:\n" << stf_local_r.rhs                                    \
+                            << "but found: " << stf_local_r.rhs                                     \
+                            << " % instead."                                                        \
             );                                                                                      \
 } while( ::stf::is_false() )                                                                        \
 /**/
+
+/*!
+  @ingroup group-unit
+
+  @brief Check for strict equality in ranges
+
+  Evaluates @c A and @c B and checks if their respective contents are strictly equals.
+  If @c A or @c B are single values, the other must be a container of size 1.
+
+  @par Example:
+
+  @snippet test/unit/all_relative.cpp all_relative
+
+  @param A First expression to compare
+  @param B Second expression to compare
+**/
+#define STF_ALL_EQUAL(A,B) STF_ALL_RELATIVE_EQUAL(A,B,0)
 
 #endif
