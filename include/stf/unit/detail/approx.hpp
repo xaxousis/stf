@@ -45,9 +45,9 @@ namespace stf
       bi = detail::begin(ref);
       br = detail::begin(data);
       auto bd = detail::begin(dist);
-      auto sz = detail::size(data);
+      std::ptrdiff_t sz = detail::size(data);
 
-      for(std::size_t idx=0;idx < sz; ++idx)
+      for(std::ptrdiff_t idx=0;idx < sz; ++idx)
         check( *bd++, *br++, *bi++, (sz>1 ? idx : -1) );
 
       return errors.size() == 0;

@@ -35,7 +35,7 @@ namespace stf
             >
     struct ulpdist
     {
-      inline double operator()(T1 a, T2 b) const
+      inline double operator()(T1 const& a, T2 const& b) const
       {
         using common_t = detail::common_t<T1,T2>;
         return ext::ulpdist<common_t>() ( static_cast<common_t>(a)
@@ -147,7 +147,7 @@ namespace stf
     @param a1 Second value to compare
     @return The distance in ULP between a0 and a1
   **/
-  template<typename T, typename U> inline double ulpdist(T a0, U a1)
+  template<typename T, typename U> inline double ulpdist(T const& a0, U const& a1)
   {
     return ext::ulpdist<T,U>()(a0,a1);
   }

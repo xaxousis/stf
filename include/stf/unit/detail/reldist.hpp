@@ -35,7 +35,7 @@ namespace stf
             >
     struct reldist
     {
-      inline double operator()(T1 a, T2 b) const
+      inline double operator()(T1 const& a, T2 const& b) const
       {
         using common_t = detail::common_t<T1,T2>;
         return ext::reldist<common_t>() ( static_cast<common_t>(a)
@@ -128,7 +128,7 @@ namespace stf
     @param a1 Second value to compare
     @return The relative distance between a0 and a1
   **/
-  template<typename T, typename U> inline double reldist(T a0, U a1)
+  template<typename T, typename U> inline double reldist(T const& a0, U const& a1)
   {
     return ext::reldist<T,U>()(a0,a1);
   }
