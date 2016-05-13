@@ -207,7 +207,8 @@ namespace stf { namespace detail
 
 #ifdef _MSC_VER
 #pragma warning(push)
-#pragma warning(disable: 4100) // unused parameter
+// unused parameter
+#pragma warning(disable: 4100)
 #endif
 
   template<typename C>
