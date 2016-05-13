@@ -24,6 +24,8 @@ import argparse
 default_includes_path = ['.']
 
 # pp tokens regexp
+r_escape_line = re.compile(r'^.*\\\n$')
+r_empty_line = re.compile('^[ \t]*\n$')
 r_pp_include = re.compile('^\s*#\s*include\s+["|<](.*)["|>]$')
 r_pp_ifndef = re.compile('^\s*#\s*ifndef\s+(.*)\s*$')
 r_pp_if_defined = re.compile('^\s*#\s*if\s+defined\(\s*(.*)\s*\)\s*$')
@@ -37,6 +39,7 @@ r_C_block_begin_comment = re.compile('(.*)/\*.*')
 r_C_block_end_comment = re.compile('.*\*/(.*)')
 
 # globals
+will_escape = False
 guard_stack = []
 included_files = []
 keep_guard = True
@@ -72,7 +75,7 @@ Print only if 'verbose' option is enabled
 """
 def vprint(opts, what):
     if opts.verbose:
-        sys.stderr.write('verbose: {}\n'.format(what))
+        sys.stderr.write('verbose: {0}\n'.format(what))
 
 """
 Try to find a valid path for the given filename, if not found then exit
@@ -80,18 +83,27 @@ Try to find a valid path for the given filename, if not found then exit
 def get_path_for(f, opts):
     for path in opts.includes_path:
         path = os.path.join(path, f)
-        vprint(opts, 'try to include: {}'.format(path))
+        vprint(opts, 'try to include: {0}'.format(path))
         if os.path.isfile(path):
             return path
-    sys.stderr.write('{}: file not found! aborting.\n'.format(f))
+    sys.stderr.write('{0}: file not found! aborting.\n'.format(f))
     sys.exit(1)
 
 """
 Preprocess a single line
 """
 def pp_line(line, output, opts):
+    global will_escape
     global keep_guard
     global in_C_block_comments
+
+    is_escaped = will_escape
+    will_escape = False
+    if r_empty_line.match(line):
+        # skip empty lines
+        return
+    # we do not want to remove comments before the first guard as
+    # its content may be a license or whatever else important
     if not keep_guard:
         # C comments (one line) '//'
         if r_C_one_line_comment.match(line):
@@ -153,6 +165,29 @@ def pp_line(line, output, opts):
             m = r_pp_define.match(line)
             if m and opts.r_guard.match(m.group(1)):
                 return
+    # check if the current line escape the next one
+    if r_escape_line.match(line):
+        will_escape = True
+    # - add missing '\n' if needed, for example:
+    #
+    # '/* foo */\n'
+    # gets turned into:
+    # ''
+    #
+    # also:
+    #
+    # #define foo\
+    # /**/
+    # gets turned into:
+    # #define foo
+    # '\n'
+    #
+    # - remove right spaces (this happens most of the time with one-line style comment)
+    # - also add a new line as it has been eaten by .rstrip()
+    line = line.rstrip() + '\n'
+    # filter empty lines
+    if line is '\n':
+        return
     # everything has been checked now! so we can print the current line
     output.write(line)
 
@@ -167,7 +202,7 @@ def pp_file(f, output, opts):
         # if included, then do not process it!
         return
     included_files.append(f)
-    vprint(opts, 'preprocessing: {}'.format(f))
+    vprint(opts, 'preprocessing: {0}'.format(f))
     try:
         with open(f, 'r') as f:
             dirname = os.path.dirname(f.name)
