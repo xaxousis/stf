@@ -186,7 +186,7 @@ def pp_line(line, output, opts):
     # - also add a new line as it has been eaten by .rstrip()
     line = line.rstrip() + '\n'
     # filter empty lines
-    if line is '\n':
+    if line is '\n' and not is_escaped:
         return
     # everything has been checked now! so we can print the current line
     output.write(line)

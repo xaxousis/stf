@@ -228,6 +228,7 @@ namespace                                                                       
   STF_REGISTRATION{::stf::unit::test(DESCRIPTION, STF_FUNCTION)};                                   \
 }                                                                                                   \
 void STF_FUNCTION( ::stf::unit::env& $ )                                                            \
+
 #define STF_RTYPE(z, n, t)                                                                          \
 {                                                                                                   \
   using T = BOOST_PP_SEQ_ELEM(n,t);                                                                 \
@@ -237,6 +238,7 @@ void STF_FUNCTION( ::stf::unit::env& $ )                                        
   if(!$.is_compact()) $.stream() << std::endl;                                                      \
   STF_FUNCTION<T>($);                                                                               \
 }                                                                                                   \
+
 #define STF_CASE_TPL(DESCRIPTION, TYPES)                                                            \
 template<typename T> void STF_FUNCTION( stf::unit::env& );                                          \
 namespace                                                                                           \
@@ -252,6 +254,7 @@ namespace                                                                       
                     };                                                                              \
 }                                                                                                   \
 template<typename T> void STF_FUNCTION( stf::unit::env& $ )                                         \
+
 #include <cstddef>
 #include <cstdint>
 #define STF_SIGNED_INTEGRAL_TYPES     (std::int8_t)(std::int16_t)(std::int32_t)(std::int64_t)
@@ -456,6 +459,7 @@ namespace stf { namespace detail
 } }
 #define STF_DUMP(R)                                                                                 \
 $.stream()  << "failing because:\n" << R.lhs << R.op << R.rhs << "\n" << "is incorrect.\n";         \
+
 namespace stf
 {
   namespace ext
@@ -528,6 +532,7 @@ namespace stf { namespace detail
               , stf::to_string( lhs ), stf::split_line(lhs,rhs,SB), stf::to_string(rhs)             \
               };                                                                                    \
     }                                                                                               \
+
     STF_BINARY_DECOMPOSE( ==, "==", eq  )
     STF_BINARY_DECOMPOSE( !=, "!=", neq )
     STF_BINARY_DECOMPOSE( < , "<" , lt  )
@@ -551,6 +556,7 @@ do                                                                              
 {                                                                                                   \
   if(!$.is_compact()) $.stream() << INDICATOR << MESSAGE << std::endl;                              \
 } while( ::stf::is_false() )                                                                        \
+
 #define STF_INFO( MESSAGE ) STF_DISPLAY("[INFO] ", MESSAGE)
 #define STF_WARNING( MESSAGE ) STF_DISPLAY("[WARNING] ", MESSAGE)
 #define STF_ERROR( MESSAGE ) STF_DISPLAY("[ERROR] ", MESSAGE)
@@ -567,6 +573,7 @@ do                                                                              
     $.stream() << "+";                                                                              \
   }                                                                                                 \
 } while( ::stf::is_false() )                                                                        \
+
 #define STF_FAIL( MESSAGE )                                                                         \
 do                                                                                                  \
 {                                                                                                   \
@@ -580,6 +587,7 @@ do                                                                              
     $.stream() << "-";                                                                              \
   }                                                                                                 \
 } while( ::stf::is_false() )                                                                        \
+
 #define STF_EXPECT( EXPR )                                                                          \
 do                                                                                                  \
 {                                                                                                   \
@@ -591,6 +599,7 @@ do                                                                              
     if(!$.is_compact()) STF_DUMP( stf_local_r );                                                    \
   }                                                                                                 \
 } while( ::stf::is_false() )                                                                        \
+
 #define STF_EXPECT_NOT( EXPR )                                                                      \
 do                                                                                                  \
 {                                                                                                   \
@@ -602,6 +611,7 @@ do                                                                              
   else                                                                                              \
     STF_PASS( "Not expecting: " << STF_STRING(EXPR));                                               \
 } while( ::stf::is_false() )                                                                        \
+
 #if defined(__GNUC__) || defined(DOXYGEN_ONLY)
 #define STF_UNUSED(X) (void) X
 #else
@@ -620,6 +630,7 @@ do                                                                              
   else                                                                                              \
     STF_FAIL( STF_STRING(X) <<  " does not throw " <<  STF_STRING(T) );                             \
 } while( ::stf::is_false() )                                                                        \
+
 #define STF_NO_THROW( X )                                                                           \
 do                                                                                                  \
 {                                                                                                   \
@@ -632,6 +643,7 @@ do                                                                              
   else                                                                                              \
     STF_PASS( STF_STRING(X) << " doesn't throw" );                                                  \
 } while( ::stf::is_false() )                                                                        \
+
 #include <vector>
 #include <string>
 namespace stf
@@ -910,6 +922,7 @@ do                                                                              
                             << " ULPs instead."                                                     \
             );                                                                                      \
 } while( ::stf::is_false() )                                                                        \
+
 #define STF_IEEE_EQUAL(A,B)  STF_ULP_EQUAL(A,B,0.)
 #define STF_ALL_ULP_EQUAL(A,B,X)                                                                    \
 do                                                                                                  \
@@ -923,6 +936,7 @@ do                                                                              
                             << " ULPs instead."                                                     \
             );                                                                                      \
 } while( ::stf::is_false() )                                                                        \
+
 #define STF_ALL_IEEE_EQUAL(A,B)  STF_ALL_ULP_EQUAL(A,B,0.)
 #define STF_RELATIVE_EQUAL(A,B,X)                                                                   \
 do                                                                                                  \
@@ -938,6 +952,7 @@ do                                                                              
                             << " % instead."                                                        \
             );                                                                                      \
 } while( ::stf::is_false() )                                                                        \
+
 #define STF_ALL_RELATIVE_EQUAL(A,B,X)                                                               \
 do                                                                                                  \
 {                                                                                                   \
@@ -951,6 +966,7 @@ do                                                                              
                             << " % instead."                                                        \
             );                                                                                      \
 } while( ::stf::is_false() )                                                                        \
+
 #define STF_ALL_EQUAL(A,B) STF_ALL_RELATIVE_EQUAL(A,B,0)
 #define STF_EQUAL( A, B )      STF_EXPECT( (A) == (B) )
 #define STF_NOT_EQUAL( A, B )  STF_EXPECT( (A) != (B) )
@@ -1001,8 +1017,10 @@ do                                                                              
                 <<  " instead"                                                                      \
                 );                                                                                  \
 } while( ::stf::is_false() )                                                                        \
+
 #define STF_EXPR_IS(Expression, Type)                                                               \
 STF_TYPE_IS(decltype( BOOST_PP_REMOVE_PARENS(Expression)), Type)                                    \
+
 #define STF_EXPR_TYPE(Expression, Lambda, Type)                                                     \
 do                                                                                                  \
 {                                                                                                   \
@@ -1029,6 +1047,7 @@ do                                                                              
                 << " but found " << stf::type_id<other>() << " instead"                             \
                 );                                                                                  \
 } while( ::stf::is_false() )                                                                        \
+
 namespace stf
 {
   namespace unit
