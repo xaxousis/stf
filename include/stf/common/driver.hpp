@@ -53,7 +53,7 @@ namespace stf
     // randomize test on non-null random seed option
     if(auto seed = args("random",0u))
     {
-      std::::stf::detail::shuffle( tests.begin(), tests.end(), std::mt19937{seed} );
+      ::stf::detail::shuffle( tests.begin(), tests.end(), std::mt19937{seed} );
     }
 
     for(auto& t : tests )
