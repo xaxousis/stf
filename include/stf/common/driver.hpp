@@ -17,6 +17,7 @@
 
 #include <stf/common/args.hpp>
 #include <stf/common/values.hpp>
+#include <stf/common/detail/shuffle.hpp>
 #include <algorithm>
 #include <random>
 
@@ -52,7 +53,7 @@ namespace stf
     // randomize test on non-null random seed option
     if(auto seed = args("random",0u))
     {
-      std::shuffle( tests.begin(), tests.end(), std::mt19937{seed} );
+      std::::stf::detail::shuffle( tests.begin(), tests.end(), std::mt19937{seed} );
     }
 
     for(auto& t : tests )
