@@ -271,6 +271,25 @@ namespace stf
   inline bool is_true()   { return true; }
 }
 #include <algorithm>
+ namespace stf { namespace detail
+ {
+ #if defined(STF_USE_INCOMPLETE_STD)
+  template<typename RGenFct> struct URNGConv
+  {
+    int operator()(int) { return fct(); }
+    RGenFct fct;
+  };
+  template<typename RandomIt, typename RGenFct>
+  void shuffle(RandomIt const& begin, RandomIt const& end, RGenFct&& r)
+  {
+    URNGConv<RGenFct> wrp({r});
+    std::random_shuffle(begin, end, wrp);
+  }
+#else
+  using std::shuffle;
+#endif
+} }
+#include <algorithm>
 #include <random>
 namespace stf
 {
@@ -281,7 +300,7 @@ namespace stf
     environment.compact(is_compact);
     if(auto seed = args("random",0u))
     {
-      std::shuffle( tests.begin(), tests.end(), std::mt19937{seed} );
+      ::stf::detail::shuffle( tests.begin(), tests.end(), std::mt19937{seed} );
     }
     for(auto& t : tests )
     {
@@ -393,6 +412,14 @@ namespace stf { namespace detail
   template <typename T, typename R>
   using if_not_streamable = typename std::enable_if<!is_streamable<T>::type::value,R>::type;
 } }
+namespace stf { namespace detail
+{
+#if defined(STF_USE_INCOMPLETE_STD)
+  using nullptr_t = decltype(nullptr);
+#else
+  using nullptr_t = std::nullptr_t;
+#endif
+} }
 #include <boost/core/demangle.hpp>
 #include <sstream>
 #include <cstddef>
@@ -400,11 +427,11 @@ namespace stf { namespace detail
 #include <iomanip>
 namespace stf
 {
-  inline std::string to_string( std::nullptr_t )        { return "nullptr";             }
-  inline std::string to_string( bool v )                { return v ? "true" : "false";  }
-  inline std::string to_string( std::string const& v )  { return v;                     }
-  inline std::string to_string( char const* v )         { return std::string(v);        }
-  inline std::string to_string( char v )                { return std::string(1, v);     }
+  inline std::string to_string( stf::detail::nullptr_t )  { return "nullptr";             }
+  inline std::string to_string( bool v )                  { return v ? "true" : "false";  }
+  inline std::string to_string( std::string const& v )    { return v;                     }
+  inline std::string to_string( char const* v )           { return std::string(v);        }
+  inline std::string to_string( char v )                  { return std::string(1, v);     }
   template <typename T>
   inline detail::if_streamable<T,std::string> to_string( T const& value)
   {

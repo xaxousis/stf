@@ -4,12 +4,10 @@
 
   Defines the to_string utility function
 
-  @copyright 2015 Joel Falcou
-
+  @copyright 2016 Joel Falcou
 
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
-
 **/
 //==================================================================================================
 #ifndef STF_COMMON_TO_STRING_HPP_INCLUDED
@@ -17,6 +15,7 @@
 
 #include <stf/common/detail/is_container.hpp>
 #include <stf/common/detail/is_streamable.hpp>
+#include <stf/common/detail/nullptr_t.hpp>
 #include <boost/core/demangle.hpp>
 #include <sstream>
 #include <cstddef>
@@ -25,11 +24,11 @@
 
 namespace stf
 {
-  inline std::string to_string( std::nullptr_t )        { return "nullptr";             }
-  inline std::string to_string( bool v )                { return v ? "true" : "false";  }
-  inline std::string to_string( std::string const& v )  { return v;                     }
-  inline std::string to_string( char const* v )         { return std::string(v);        }
-  inline std::string to_string( char v )                { return std::string(1, v);     }
+  inline std::string to_string( stf::detail::nullptr_t )  { return "nullptr";             }
+  inline std::string to_string( bool v )                  { return v ? "true" : "false";  }
+  inline std::string to_string( std::string const& v )    { return v;                     }
+  inline std::string to_string( char const* v )           { return std::string(v);        }
+  inline std::string to_string( char v )                  { return std::string(1, v);     }
 
   /*!
     @ingroup group-common
