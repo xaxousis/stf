@@ -15,6 +15,7 @@
 #ifndef STF_COMMON_DETAIL_IS_CONTAINER_HPP_INCLUDED
 #define STF_COMMON_DETAIL_IS_CONTAINER_HPP_INCLUDED
 
+#include <stf/common/detail/declval.hpp>
 #include <cstddef>
 #include <type_traits>
 
@@ -54,9 +55,9 @@ namespace stf { namespace detail
   template<typename T> struct is_container
   {
     template<typename U>
-    static auto test( int ) -> decltype ( std::declval<U>().begin()
-                                        , std::declval<U>().end()
-                                        , std::declval<U>().size()
+    static auto test( int ) -> decltype ( detail::declval<U>().begin()
+                                        , detail::declval<U>().end()
+                                        , detail::declval<U>().size()
                                         , std::true_type()
                                         );
 

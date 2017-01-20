@@ -50,7 +50,8 @@ namespace stf
   template <typename T>
   inline detail::if_container<T,std::string> make_string( T const& value)
   {
-    auto b = value.begin(), e = value.end();
+    auto b = value.begin();
+    auto e = value.end();
     std::ostringstream os;
 
     os << "{ ";

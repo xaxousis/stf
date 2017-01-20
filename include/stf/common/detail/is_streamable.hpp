@@ -19,6 +19,8 @@
 #include <iostream>
 #include <type_traits>
 
+#include <stf/common/detail/declval.hpp>
+
 namespace stf { namespace detail
 {
   /*!
@@ -52,7 +54,7 @@ namespace stf { namespace detail
   template<typename T> struct is_streamable
   {
     template<typename U>
-    static auto test( int ) -> decltype ( std::cout << std::declval<U>()
+    static auto test( int ) -> decltype ( std::cout << detail::declval<U>()
                                         , std::true_type()
                                         );
 
