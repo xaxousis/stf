@@ -54,17 +54,17 @@ namespace                                                                       
   ::stf::detail::registrar                                                                          \
   STF_REGISTRATION{::stf::unit::test(DESCRIPTION, STF_FUNCTION)};                                   \
 }                                                                                                   \
-void STF_FUNCTION( ::stf::unit::env& $ )                                                            \
+void STF_FUNCTION( ::stf::unit::env& runtime)                                                               \
 /**/
 
 #define STF_RTYPE(z, n, t)                                                                          \
 {                                                                                                   \
   using T = BOOST_PP_SEQ_ELEM(n,t);                                                                 \
-  $.stream() << std::endl;                                                                          \
-  $.stream() <<  "With T = [" << STF_STRING(BOOST_PP_SEQ_ELEM(n,t))                                 \
+  runtime.stream() << std::endl;                                                                    \
+  runtime.stream() <<  "With T = [" << STF_STRING(BOOST_PP_SEQ_ELEM(n,t))                           \
                         << "] ";                                                                    \
-  if(!$.is_compact()) { $.stream() << std::endl; }                                                  \
-  STF_FUNCTION<T>($);                                                                               \
+  if(!runtime.is_compact()) { runtime.stream() << std::endl; }                                      \
+  STF_FUNCTION<T>(runtime);                                                                         \
 }                                                                                                   \
 /**/
 
@@ -93,14 +93,14 @@ namespace                                                                       
   stf::detail::registrar                                                                            \
   STF_REGISTRATION{ stf::unit::test                                                                 \
                       ( DESCRIPTION                                                                 \
-                      , [](::stf::unit::env& $) -> void                                             \
+                      , [](::stf::unit::env& runtime) -> void                                       \
                         {                                                                           \
                           BOOST_PP_REPEAT(BOOST_PP_SEQ_SIZE(TYPES),STF_RTYPE,TYPES)                 \
                         }                                                                           \
                       )                                                                             \
                     };                                                                              \
 }                                                                                                   \
-template<typename T> void STF_FUNCTION( stf::unit::env& $ )                                         \
+template<typename T> void STF_FUNCTION( stf::unit::env& runtime )                                   \
 /**/
 
 #endif

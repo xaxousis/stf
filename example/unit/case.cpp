@@ -41,11 +41,11 @@ STF_CASE_TPL( "A template test", (float)(int) )
 //! [driver]
 int main(int argc, char** argv)
 {
-  ::stf::env $env(std::cout);
+  ::stf::env runtime(std::cout);
 
   // Test specific setup goes here
 
-  auto result = ::stf::run( $env, ::stf::suite(), {0,0} );
+  auto result = ::stf::run( runtime, ::stf::suite(), {0,0} );
 
   // Test specific clean-up goes here
 

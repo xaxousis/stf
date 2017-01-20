@@ -63,6 +63,6 @@ STF_CASE( "Check that forced broken types tests fails" )
 
 int main(int argc, const char** argv)
 {
-  ::stf::unit::env $env(argc,argv,std::cout);
-  return ::stf::run( $env, ::stf::unit::suite(), 16, 0 );
+  ::stf::unit::env runtime(argc,argv,std::cout);
+  return ::stf::run( runtime, ::stf::unit::suite(), 16, 0 );
 }

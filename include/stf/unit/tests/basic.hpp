@@ -37,7 +37,7 @@ do                                                                              
   else                                                                                              \
   {                                                                                                 \
     STF_FAIL( "Expecting: " << STF_STRING(EXPR));                                                   \
-    if(!$.is_compact()) STF_DUMP( stf_local_r );                                                    \
+    if(!runtime.is_compact()) STF_DUMP( stf_local_r );                                                    \
   }                                                                                                 \
 } while( ::stf::is_false() )                                                                        \
 /**/
@@ -58,7 +58,7 @@ do                                                                              
   if( ::stf::detail::result stf_local_r = STF_DECOMPOSE(EXPR) )                                     \
   {                                                                                                 \
     STF_FAIL( "Not expecting: " << STF_STRING(EXPR));                                               \
-    if(!$.is_compact()) STF_DUMP( stf_local_r );                                                    \
+    if(!runtime.is_compact()) STF_DUMP( stf_local_r );                                                    \
   }                                                                                                 \
   else                                                                                              \
     STF_PASS( "Not expecting: " << STF_STRING(EXPR));                                               \

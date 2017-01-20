@@ -15,6 +15,6 @@ STF_CASE( "Check detection of more invalid tests" )  {}
 
 int main(int argc, const char** argv)
 {
-  ::stf::unit::env $env(argc,argv,std::cout);
-  return ::stf::run( $env, ::stf::unit::suite(), 0, 2 );
+  ::stf::unit::env runtime(argc,argv,std::cout);
+  return ::stf::run( runtime, ::stf::unit::suite(), 0, 2 );
 }

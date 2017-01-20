@@ -29,7 +29,7 @@
 #define STF_DISPLAY( INDICATOR, MESSAGE )                                                           \
 do                                                                                                  \
 {                                                                                                   \
-  if(!$.is_compact()) $.stream() << INDICATOR << MESSAGE << std::endl;                              \
+  if(!runtime.is_compact()) runtime.stream() << INDICATOR << MESSAGE << std::endl;                              \
 } while( ::stf::is_false() )                                                                        \
 /**/
 
@@ -84,14 +84,14 @@ do                                                                              
 #define STF_PASS( MESSAGE )                                                                         \
 do                                                                                                  \
 {                                                                                                   \
-  $.as_success();                                                                                   \
-  if(!$.is_compact())                                                                               \
+  runtime.as_success();                                                                             \
+  if(!runtime.is_compact())                                                                         \
   {                                                                                                 \
-    $.pass() << MESSAGE << " in: " << ::stf::at(__FILE__,__LINE__) << std::endl;                    \
+    runtime.pass() << MESSAGE << " in: " << ::stf::at(__FILE__,__LINE__) << std::endl;              \
   }                                                                                                 \
   else                                                                                              \
   {                                                                                                 \
-    $.stream() << "+";                                                                              \
+    runtime.stream() << "+";                                                                        \
   }                                                                                                 \
 } while( ::stf::is_false() )                                                                        \
 /**/
@@ -111,14 +111,14 @@ do                                                                              
 #define STF_FAIL( MESSAGE )                                                                         \
 do                                                                                                  \
 {                                                                                                   \
-  $.as_failure();                                                                                   \
-  if(!$.is_compact())                                                                               \
+  runtime.as_failure();                                                                             \
+  if(!runtime.is_compact())                                                                         \
   {                                                                                                 \
-    $.fail() << MESSAGE << " in: " << ::stf::at(__FILE__,__LINE__) << std::endl;                    \
+    runtime.fail() << MESSAGE << " in: " << ::stf::at(__FILE__,__LINE__) << std::endl;              \
   }                                                                                                 \
   else                                                                                              \
   {                                                                                                 \
-    $.stream() << "-";                                                                              \
+    runtime.stream() << "-";                                                                        \
   }                                                                                                 \
 } while( ::stf::is_false() )                                                                        \
 /**/

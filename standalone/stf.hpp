@@ -227,16 +227,16 @@ namespace                                                                       
   ::stf::detail::registrar                                                                          \
   STF_REGISTRATION{::stf::unit::test(DESCRIPTION, STF_FUNCTION)};                                   \
 }                                                                                                   \
-void STF_FUNCTION( ::stf::unit::env& $ )                                                            \
+void STF_FUNCTION( ::stf::unit::env& runtime )                                                            \
 
 #define STF_RTYPE(z, n, t)                                                                          \
 {                                                                                                   \
   using T = BOOST_PP_SEQ_ELEM(n,t);                                                                 \
-  $.stream() << std::endl;                                                                          \
-  $.stream() <<  "With T = [" << STF_STRING(BOOST_PP_SEQ_ELEM(n,t))                                 \
+  runtime.stream() << std::endl;                                                                          \
+  runtime.stream() <<  "With T = [" << STF_STRING(BOOST_PP_SEQ_ELEM(n,t))                                 \
                         << "] ";                                                                    \
-  if(!$.is_compact()) { $.stream() << std::endl; }                                                  \
-  STF_FUNCTION<T>($);                                                                               \
+  if(!runtime.is_compact()) { runtime.stream() << std::endl; }                                                  \
+  STF_FUNCTION<T>(runtime);                                                                               \
 }                                                                                                   \
 
 #define STF_CASE_TPL(DESCRIPTION, TYPES)                                                            \
@@ -246,14 +246,14 @@ namespace                                                                       
   stf::detail::registrar                                                                            \
   STF_REGISTRATION{ stf::unit::test                                                                 \
                       ( DESCRIPTION                                                                 \
-                      , [](::stf::unit::env& $) -> void                                             \
+                      , [](::stf::unit::env& runtime) -> void                                             \
                         {                                                                           \
                           BOOST_PP_REPEAT(BOOST_PP_SEQ_SIZE(TYPES),STF_RTYPE,TYPES)                 \
                         }                                                                           \
                       )                                                                             \
                     };                                                                              \
 }                                                                                                   \
-template<typename T> void STF_FUNCTION( stf::unit::env& $ )                                         \
+template<typename T> void STF_FUNCTION( stf::unit::env& runtime )                                         \
 
 #include <cstddef>
 #include <cstdint>
@@ -322,8 +322,8 @@ namespace stf
 #if !defined(STF_USE_CUSTOM_DRIVER)
 int STF_CUSTOM_DRIVER_FUNCTION(int argc, const char** argv)
 {
-  ::stf::unit::env $env(argc,argv,std::cout);
-  return ::stf::run( $env, ::stf::unit::suite(), 0, 0 );
+  ::stf::unit::env runtime(argc,argv,std::cout);
+  return ::stf::run( runtime, ::stf::unit::suite(), 0, 0 );
 }
 #endif
 #include <iostream>
@@ -485,7 +485,7 @@ namespace stf { namespace detail
   };
 } }
 #define STF_DUMP(R)                                                                                 \
-$.stream()  << "failing because:\n" << R.lhs << R.op << R.rhs << "\n" << "is incorrect.\n";         \
+runtime.stream()  << "failing because:\n" << R.lhs << R.op << R.rhs << "\n" << "is incorrect.\n";         \
 
 namespace stf
 {
@@ -581,7 +581,7 @@ namespace stf { namespace detail
 #define STF_DISPLAY( INDICATOR, MESSAGE )                                                           \
 do                                                                                                  \
 {                                                                                                   \
-  if(!$.is_compact()) $.stream() << INDICATOR << MESSAGE << std::endl;                              \
+  if(!runtime.is_compact()) runtime.stream() << INDICATOR << MESSAGE << std::endl;                              \
 } while( ::stf::is_false() )                                                                        \
 
 #define STF_INFO( MESSAGE ) STF_DISPLAY("[INFO] ", MESSAGE)
@@ -590,28 +590,28 @@ do                                                                              
 #define STF_PASS( MESSAGE )                                                                         \
 do                                                                                                  \
 {                                                                                                   \
-  $.as_success();                                                                                   \
-  if(!$.is_compact())                                                                               \
+  runtime.as_success();                                                                                   \
+  if(!runtime.is_compact())                                                                               \
   {                                                                                                 \
-    $.pass() << MESSAGE << " in: " << ::stf::at(__FILE__,__LINE__) << std::endl;                    \
+    runtime.pass() << MESSAGE << " in: " << ::stf::at(__FILE__,__LINE__) << std::endl;                    \
   }                                                                                                 \
   else                                                                                              \
   {                                                                                                 \
-    $.stream() << "+";                                                                              \
+    runtime.stream() << "+";                                                                              \
   }                                                                                                 \
 } while( ::stf::is_false() )                                                                        \
 
 #define STF_FAIL( MESSAGE )                                                                         \
 do                                                                                                  \
 {                                                                                                   \
-  $.as_failure();                                                                                   \
-  if(!$.is_compact())                                                                               \
+  runtime.as_failure();                                                                                   \
+  if(!runtime.is_compact())                                                                               \
   {                                                                                                 \
-    $.fail() << MESSAGE << " in: " << ::stf::at(__FILE__,__LINE__) << std::endl;                    \
+    runtime.fail() << MESSAGE << " in: " << ::stf::at(__FILE__,__LINE__) << std::endl;                    \
   }                                                                                                 \
   else                                                                                              \
   {                                                                                                 \
-    $.stream() << "-";                                                                              \
+    runtime.stream() << "-";                                                                              \
   }                                                                                                 \
 } while( ::stf::is_false() )                                                                        \
 
@@ -623,7 +623,7 @@ do                                                                              
   else                                                                                              \
   {                                                                                                 \
     STF_FAIL( "Expecting: " << STF_STRING(EXPR));                                                   \
-    if(!$.is_compact()) STF_DUMP( stf_local_r );                                                    \
+    if(!runtime.is_compact()) STF_DUMP( stf_local_r );                                                    \
   }                                                                                                 \
 } while( ::stf::is_false() )                                                                        \
 
@@ -633,7 +633,7 @@ do                                                                              
   if( ::stf::detail::result stf_local_r = STF_DECOMPOSE(EXPR) )                                     \
   {                                                                                                 \
     STF_FAIL( "Not expecting: " << STF_STRING(EXPR));                                               \
-    if(!$.is_compact()) STF_DUMP( stf_local_r );                                                    \
+    if(!runtime.is_compact()) STF_DUMP( stf_local_r );                                                    \
   }                                                                                                 \
   else                                                                                              \
     STF_PASS( "Not expecting: " << STF_STRING(EXPR));                                               \
