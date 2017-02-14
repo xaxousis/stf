@@ -9,6 +9,7 @@
 #ifndef STF_COMMON_DETAIL_RANDOM_HPP_INCLUDED
 #define STF_COMMON_DETAIL_RANDOM_HPP_INCLUDED
 
+#include <stf/common/config.hpp>
 #include <algorithm>
 
  namespace stf { namespace detail

@@ -15,11 +15,12 @@
 #ifndef STF_COMMON_ARGS_HPP_INCLUDED
 #define STF_COMMON_ARGS_HPP_INCLUDED
 
+#include <stf/common/config.hpp>
+
 #include <unordered_map>
 #include <sstream>
 #include <cstdlib>
 #include <string>
-#include <boost/config.hpp>
 
 namespace stf
 {

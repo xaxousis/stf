@@ -9,6 +9,8 @@
 #ifndef STF_COMMON_DETAIL_NULLPTR_T_HPP_INCLUDED
 #define STF_COMMON_DETAIL_NULLPTR_T_HPP_INCLUDED
 
+#include <stf/common/config.hpp>
+
 namespace stf { namespace detail
 {
 #if defined(STF_USE_INCOMPLETE_STD)

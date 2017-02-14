@@ -9,6 +9,8 @@
 #ifndef STF_COMMON_DETAIL_DECLVAL_HPP_INCLUDED
 #define STF_COMMON_DETAIL_DECLVAL_HPP_INCLUDED
 
+#include <stf/common/config.hpp>
+
 #if defined(STF_USE_INCOMPLETE_STD)
 #include <boost/utility/declval.hpp>
 namespace stf { namespace detail {
