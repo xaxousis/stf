@@ -1,4 +1,0 @@
-[submodule "doc/html"]
-	path = doc/html
-	url = https://github.com/jfalcou/stf.git
-	branch = gh-pages
