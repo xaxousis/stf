@@ -4,7 +4,7 @@
 
   Defines functions to retrieve options through command line or environment variables
 
-  @copyright 2015 Joel Falcou
+  @copyright 2017 NumScale
 
 
   Distributed under the Boost Software License, Version 1.0.

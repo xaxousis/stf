@@ -4,7 +4,7 @@
 
   Defines types and macros for macro expression display
 
-  @copyright 2015 Joel Falcou
+  @copyright 2017 NumScale
 
 
   Distributed under the Boost Software License, Version 1.0.

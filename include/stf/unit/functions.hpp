@@ -4,7 +4,7 @@
 
   Main header for the unit test functions
 
-  @copyright 2015 Joel Falcou
+  @copyright 2017 NumScale
 
 
   Distributed under the Boost Software License, Version 1.0.

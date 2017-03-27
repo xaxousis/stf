@@ -5,7 +5,7 @@
    Defines extensible comparator for relation tests macro
 
    @copyright 2015 LRI UMR 8623 CNRS/Univ Parcompare_ Sud XI
-   @copyright 2015 Joel Falcou
+   @copyright 2017 NumScale
 
 
    Distributed under the Boost Software License, Version 1.0.
