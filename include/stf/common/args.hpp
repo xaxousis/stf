@@ -82,6 +82,17 @@ namespace stf
         return def;
       }
 
+      std::string operator()(std::string const& id, std::string def = "") const
+      {
+        auto opt = data_.find(id);
+        if(opt != data_.cend())
+        {
+          def = data_[id];
+        }
+
+        return def;
+      }
+
       static bool is_option(std::string const& s)
       {
         return (s.size() > 2) && (s[0] == '-') && (s[1] == '-');
