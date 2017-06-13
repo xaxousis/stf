@@ -21,6 +21,7 @@
 #include <sstream>
 #include <cstdlib>
 #include <string>
+#include <vector>
 
 namespace stf
 {
@@ -39,7 +40,7 @@ namespace stf
         for(auto const& id : envvars)
         {
           auto p = get_env(id.first);
-          if(!p.empty()) data_[id.second] = p;
+          if(!p.empty()) data_[id.second][0] = p;
         }
       }
 
@@ -63,8 +64,7 @@ namespace stf
             // if an option was found and we're looking at another impromptu option, update the map
             if(found && !is_option(cur))
             {
-              data_[id] = cur;
-              found = false;
+              data_[id].push_back(cur);
             }
           }
         }
@@ -75,7 +75,7 @@ namespace stf
         auto opt = data_.find(id);
         if(opt != data_.cend())
         {
-          std::istringstream s(opt->second);
+          std::istringstream s(opt->second[0]);
           s >> def;
         }
 
@@ -83,6 +83,17 @@ namespace stf
       }
 
       std::string operator()(std::string const& id, std::string def = "") const
+      {
+        auto opt = data_.find(id);
+        if(opt != data_.cend())
+        {
+          def = data_[id][0];
+        }
+
+        return def;
+      }
+
+      std::vector<std::string> operator()(std::string const& id, std::vector<std::string> def = { }) const
       {
         auto opt = data_.find(id);
         if(opt != data_.cend())
@@ -118,7 +129,7 @@ namespace stf
       }
 
       private:
-      mutable std::unordered_map<std::string,std::string> data_;
+      mutable std::unordered_map<std::string,std::vector<std::string>> data_;
     };
   }
 
