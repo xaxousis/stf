@@ -40,7 +40,7 @@ namespace stf
         for(auto const& id : envvars)
         {
           auto p = get_env(id.first);
-          if(!p.empty()) data_[id.second][0] = p;
+          if(!p.empty()) data_[id.second].push_back(p);
         }
       }
 
