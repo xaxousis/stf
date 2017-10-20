@@ -17,6 +17,7 @@
 
 #include <stf/unit/detail/ulp.hpp>
 #include <stf/unit/detail/relative.hpp>
+#include <stf/unit/detail/absolute.hpp>
 #include <stf/unit/detail/decompose.hpp>
 #include <stf/unit/tests/basic.hpp>
 
@@ -196,5 +197,69 @@ do                                                                              
   @param B Second expression to compare
 **/
 #define STF_ALL_EQUAL(A,B) STF_ALL_RELATIVE_EQUAL(A,B,0)
+
+/*!
+  @ingroup group-unit
+
+  @brief Check for equality within a absolute distance
+
+  Evaluates @c A and @c B and checks if their respective value(s) are within a absolute tolerance
+  of @c X.
+
+  @par Example:
+
+  @snippet test/unit/absolute.cpp absolute
+
+  @param A First expression to compare
+  @param B Second expression to compare
+  @param X Absolute tolerance
+**/
+#define STF_ABSOLUTE_EQUAL(A,B,X)                                                                   \
+  do                                                                                                \
+  {                                                                                                 \
+    auto stf_local_r = ::stf::absdist((A),(B));                                                     \
+    auto stf_local_d = STF_DECOMPOSE((A) == (B));                                                   \
+    if( stf_local_r <= (X))                                                                         \
+      STF_PASS( "Expecting: " << STF_STRING(A) " == " STF_STRING(B) << " ~ " << X << ".");          \
+    else                                                                                            \
+      STF_FAIL( "Expecting: " << stf_local_d.lhs << " == " << stf_local_d.rhs                       \
+                << " within " << X                                                                  \
+                << " but found: " << stf_local_r                                                    \
+                << " instead."                                                                      \
+        );                                                                                          \
+  } while( ::stf::is_false() )                                                                      \
+/**/
+
+/*!
+  @ingroup group-unit
+
+  @brief Check for equality within a absolute distance in ranges
+
+  Evaluates @c A and @c B and checks if their respective contents are within a
+  absolute tolerance of @c X. If @c A or @c B are single values, the other must
+  be a container of size 1.
+
+  @par Example:
+
+  @snippet test/unit/all_absolute.cpp all_absolute
+
+  @param A First expression to compare
+  @param B Second expression to compare
+  @param X Absolute tolerance
+**/
+#define STF_ALL_ABSOLUTE_EQUAL(A,B,X)                                                               \
+do                                                                                                  \
+{                                                                                                   \
+  auto stf_local_r = STF_DECOMPOSE((A) == ::stf::absolute(B,X));                                    \
+  if( stf_local_r )                                                                                 \
+    STF_PASS( "Expecting: " << STF_STRING(A) " == " STF_STRING(B) << " within " << X << ".");       \
+  else                                                                                              \
+    STF_FAIL( "Expecting: " << STF_STRING(A) " == " STF_STRING(B)                                   \
+                            << " within " << X                                                      \
+                            << " but found: " << stf_local_r.rhs                                    \
+                            << " % instead."                                                        \
+            );                                                                                      \
+} while( ::stf::is_false() )                                                                        \
+/**/
 
 #endif
