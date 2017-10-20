@@ -45,7 +45,7 @@ namespace stf
       bi = detail::begin(ref);
       br = detail::begin(data);
       auto bd = detail::begin(dist);
-      std::ptrdiff_t sz = detail::size(data);
+      std::ptrdiff_t sz = static_cast<std::ptrdiff_t>(detail::size(data));
 
       for(std::ptrdiff_t idx=0;idx < sz; ++idx)
         check( *bd++, *br++, *bi++, (sz>1 ? idx : -1) );
