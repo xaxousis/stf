@@ -16,6 +16,7 @@
 #define STF_UNIT_ENV_HPP_INCLUDED
 
 #include <stf/common/args.hpp>
+#include <stf/common/detail/null_stream.hpp>
 #include <iostream>
 #include <cstddef>
 #include <string>
@@ -46,6 +47,12 @@ namespace stf
 
       /// Check the environment mode
       bool is_compact() const { return compact_mode; }
+
+      /// Trigger environment compact mode
+      void fail_only(bool m) { fail_only_mode = m; }
+
+      /// Check the environment mode
+      bool is_fail_only() const { return fail_only_mode; }
 
       /// Report a test to be successful
       void as_success() { test_count++; success_count++; }
@@ -79,7 +86,12 @@ namespace stf
       std::ostream& stream() const { return os; }
 
       /// Insert a "[PASS]" message into the stream
-      std::ostream& pass()    const { return os << "[PASS]" << " - "; }
+      std::ostream& pass()    const {
+        if(fail_only_mode) {
+          return stf::null_stream;
+        }
+        return os << "[PASS]" << " - ";
+      }
 
       /// Insert a "[FAIL]" message into the stream
       std::ostream& fail()    const { return os << "[FAIL]" << " - "; }
@@ -102,6 +114,7 @@ namespace stf
       std::ptrdiff_t  success_count;
       std::ptrdiff_t  invalid_count;
       bool            compact_mode;
+      bool            fail_only_mode;
       std::ostream&   os;
     };
   }

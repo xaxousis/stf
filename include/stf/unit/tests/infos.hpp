@@ -89,7 +89,7 @@ do                                                                              
   {                                                                                                 \
     runtime.pass() << MESSAGE << " in: " << ::stf::at(__FILE__,__LINE__) << std::endl;              \
   }                                                                                                 \
-  else                                                                                              \
+  else if(!runtime.is_fail_only())                                                                  \
   {                                                                                                 \
     runtime.stream() << "+";                                                                        \
   }                                                                                                 \

@@ -48,7 +48,9 @@ namespace stf
   {
     // retrieve compact status
     auto is_compact = args("compact",false);
+    auto is_fail_only = args("fail-only",false);
     environment.compact(is_compact);
+    environment.fail_only(is_fail_only);
 
     // randomize test on non-null random seed option
     if(auto seed = args("random",0u))
