@@ -35,6 +35,9 @@ namespace stf
             >
     struct absdist
     {
+      static_assert(std::is_fundamental<T1>::value && std::is_fundamental<T2>::value,
+        "absdist needs to be specialised for no fundamental types.");
+
       inline double operator()(T1 const& a, T2 const& b) const
       {
         using common_t = detail::common_t<T1,T2>;
